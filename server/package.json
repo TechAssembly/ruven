@@ -1,0 +1,19 @@
+{
+  "name": "ruven-server",
+  "version": "1.0.0",
+  "description": "The server side for the Ruven Game",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TechAssembly/ruven.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TechAssembly/ruven/issues"
+  },
+  "homepage": "https://github.com/TechAssembly/ruven#readme"
+}
