@@ -1,5 +1,7 @@
-export default class Rotation {
-  constructor(public roll: number = 0,
-              public pitch: number = 0,
-              public yaw: number = 0) { }
+export class Rotation {
+  constructor(
+    public x: number = 0,
+    public y: number = 0,
+    public z: number = 0,
+  ) { }
 }
