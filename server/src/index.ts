@@ -1,12 +1,16 @@
 import { Server } from 'colyseus';
 import { createServer } from 'http';
-import express from 'express';
+import express, { Request, Response } from 'express';
 
 import { GameRoom } from './Rooms/GameRoom/GameRoom';
 import { FreeForAllLobbyRoom, TeamLobbyRoom } from './Rooms/GameLobbyRoom';
 
 const app: express.Application = express();
 const port: number = Number(process.env.PORT) || 3000;
+
+app.get('/', (req: Request, res: Response) => {
+  res.send('Game is up');
+});
 
 const gameServer = new Server({
   server: createServer(app),
@@ -17,4 +21,6 @@ gameServer.register('free_for_all_lobby', FreeForAllLobbyRoom);
 gameServer.register('team_deathmatch_lobby', TeamLobbyRoom);
 
 gameServer.matchMaker.create('game', {});
-gameServer.listen(port);
+gameServer.listen(port, undefined, undefined, () => {
+  console.log('Server is listening on port', port);
+});
