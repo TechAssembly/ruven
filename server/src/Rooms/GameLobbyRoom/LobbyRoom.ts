@@ -1,5 +1,6 @@
 import { Client, Room } from 'colyseus';
 import { LobbyRoomState, LobbyPlayer, PlayerState } from './LobbyRoomState';
+import { debugLobbies } from '../../loggers';
 
 export const MAX_PLAYERS_IN_ROOM = 16;
 
@@ -18,14 +19,17 @@ export abstract class LobbyRoom<
   protected abstract initialPlayerState(data?: any): S;
 
   onJoin(client: Client): void {
+    debugLobbies('Player %o joined lobby %o', client.sessionId, this.roomId);
     this.state.addPlayer(client);
   }
 
   onLeave(client: Client): void {
+    debugLobbies('Player %o left lobby %o', client.sessionId, this.roomId);
     this.state.removePlayer(client);
   }
 
   onReady(client: Client): void {
+    debugLobbies('Player %o marked as ready in lobby %o', client.sessionId, this.roomId);
     this.state.readyPlayer(client);
   }
 }

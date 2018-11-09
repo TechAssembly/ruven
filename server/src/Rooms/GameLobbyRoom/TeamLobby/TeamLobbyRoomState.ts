@@ -2,6 +2,7 @@ import { LobbyPlayer, PlayerState, LobbyRoomState } from '../LobbyRoomState';
 import { EntityMap, Client } from 'colyseus';
 import uuid = require('uuid');
 import { TeamLobbyPlayer, Team, sortTeamsByPlayerCount } from './Team';
+import { debugErrors } from '../../../loggers';
 
 export class TeamLobbyRoomState extends LobbyRoomState<TeamLobbyPlayer> {
   teams: EntityMap<Team> = {};
@@ -29,8 +30,7 @@ export class TeamLobbyRoomState extends LobbyRoomState<TeamLobbyPlayer> {
   addPlayer(client: Client): TeamLobbyPlayer {
     const player = super.addPlayer(client);
     const team = this.findLeastOccupiedTeam();
-    player.team = team.id;
-    team.players.push(player);
+    team.add(player);
     return player;
   }
 
@@ -50,7 +50,7 @@ export class TeamLobbyRoomState extends LobbyRoomState<TeamLobbyPlayer> {
   public changePlayerTeam(client: Client, requestedTeamId: string): void {
     const requestedTeam = this.teams[requestedTeamId];
     if (!requestedTeam) {
-      console.log(`Requested team (${requestedTeamId}) doesn\'t exist`);
+      debugErrors(`Requested team (${requestedTeamId}) doesn\'t exist`);
       return;
     }
 

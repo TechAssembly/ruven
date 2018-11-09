@@ -6,6 +6,7 @@ import cors from 'cors';
 
 import { GameRoom } from './Rooms/GameRoom/GameRoom';
 import { FreeForAllLobbyRoom, TeamLobbyRoom } from './Rooms/GameLobbyRoom';
+import { ruvenDebug } from './loggers';
 
 const app: express.Application = express();
 const port: number = Number(process.env.PORT) || 3000;
@@ -20,15 +21,9 @@ const gameServer = new Server({
   server: createServer(app),
 });
 
-const logRoomEvents = (handler: RegisteredHandler) => {
-  handler
-    .on('join', (room, client) => console.log(handler.klass.name, client.id, 'joined', room.roomId))
-    .on('leave', (room, client) => console.log(handler.klass.name, client.id, 'left', room.roomId));
-};
-
-gameServer.register('game', GameRoom).then(logRoomEvents);
-gameServer.register('free_for_all_lobby', FreeForAllLobbyRoom).then(logRoomEvents);
-gameServer.register('team_deathmatch_lobby', TeamLobbyRoom).then(logRoomEvents);
+gameServer.register('game', GameRoom);
+gameServer.register('free_for_all_lobby', FreeForAllLobbyRoom);
+gameServer.register('team_deathmatch_lobby', TeamLobbyRoom);
 
 gameServer.matchMaker.create('game', {});
 gameServer.matchMaker.create('free_for_all_lobby', {});
@@ -37,5 +32,5 @@ gameServer.matchMaker.create('team_deathmatch_lobby', {});
 app.use('/colyseus', monitor(gameServer));
 
 gameServer.listen(port, undefined, undefined, () => {
-  console.log('Server is listening on port', port);
+  ruvenDebug('Server is listening on port %d', port);
 });

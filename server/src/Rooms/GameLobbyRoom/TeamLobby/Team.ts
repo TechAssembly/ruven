@@ -1,5 +1,6 @@
 import { Client } from 'colyseus';
 import { LobbyPlayer, PlayerState } from '../LobbyRoomState';
+import { debugTeam, debugErrors } from '../../../loggers';
 
 export class TeamLobbyPlayer extends LobbyPlayer {
   constructor(
@@ -23,11 +24,12 @@ export class Team {
 
   public add(player: TeamLobbyPlayer): void {
     const index = this.players.findIndex(samePlayer(player));
-    if (index < 0) {
-      console.log(`Player ${player.id} already in team ${this.id}`);
+    if (index >= 0) {
+      debugErrors('Player %o already in team %o, aborting %o', player.id, this.id, 'add');
       return;
     }
 
+    debugTeam('Player %o added to team %o', player.id, this.id);
     player.team = this.id;
     this.players.push(player);
   }
@@ -35,8 +37,11 @@ export class Team {
   public remove(player: TeamLobbyPlayer): boolean {
     const index = this.players.findIndex(samePlayer(player));
     if (index < 0) {
+      debugErrors('Player %o already in team %o, aborting %o', player.id, this.id, 'remove');
       return false;
     }
+
+    debugTeam('Player %o removed from team %o', player.id, this.id);
     player.team = null;
     this.players.splice(index, 1);
     return true;

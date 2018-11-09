@@ -1,4 +1,5 @@
 import { EntityMap, Client } from 'colyseus';
+import { debugLobbies } from '../../loggers';
 
 export enum PlayerState {
   Waiting,

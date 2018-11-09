@@ -2,6 +2,7 @@ import { EntityMap, Client } from 'colyseus';
 import { MoveMessage } from './Messages';
 import { Player } from './Player';
 import { Direction } from './Direction';
+import { debugErrors } from '../../loggers';
 
 export class GameState {
   players: EntityMap<Player> = {};
@@ -35,7 +36,7 @@ export class GameState {
         player.position.y -= 1;
         break;
       default:
-        console.log('DELETE ME WHEN USE DEBUG', 'Got invalid direction', direction);
+        debugErrors('Got invalid direction %o from player %o', direction, player.name);
     }
   }
 }
