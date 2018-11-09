@@ -40,6 +40,12 @@ public class ColyseusLobbyManager : MonoBehaviour
 
     internal void JoinRoom(RoomData roomData)
     {
+        if (room != null && room.id == roomData.Id)
+        {
+            Debug.Log("Already joined room " + roomData.Id);
+            return;
+        }
+
         if (room != null)
         {
             room.Leave();
