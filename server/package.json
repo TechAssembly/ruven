@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/TechAssembly/ruven#readme",
   "devDependencies": {
+    "@types/cors": "^2.8.4",
     "@types/express": "^4.16.0",
     "@types/node": "^10.12.2",
     "@types/uuid": "^3.4.4",
@@ -37,7 +38,9 @@
     "typescript": "^3.1.6"
   },
   "dependencies": {
+    "@colyseus/monitor": "^0.1.10",
     "colyseus": "^0.9.19",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "uuid": "^3.3.2"
   }
