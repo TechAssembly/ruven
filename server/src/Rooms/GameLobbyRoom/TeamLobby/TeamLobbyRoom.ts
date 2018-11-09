@@ -8,7 +8,7 @@ export const DEFAULT_TEAM_COUNT: number = 2;
 export class TeamLobbyRoom extends LobbyRoom<TeamLobbyRoomState> {
 
   protected initialPlayerState(data?: any): TeamLobbyRoomState {
-    const teamCount = data.roomCount && data.roomCount >= 2
+    const teamCount = data && data.roomCount && data.roomCount >= 2
       ? data.roomCount : DEFAULT_TEAM_COUNT;
     return new TeamLobbyRoomState(teamCount);
   }

@@ -15,15 +15,14 @@ const DEBUG_generatePlayerId = () => {
 
 export class LobbyPlayer {
   public name: string;
+  public id: string;
+
   constructor(
-    public client: Client,
+    client: Client,
     public state: PlayerState = PlayerState.Waiting,
   ) {
-    this.name = this.client.options.name || DEBUG_generatePlayerId();
-  }
-
-  get id(): string {
-    return this.client.sessionId;
+    this.id = client.sessionId;
+    this.name = client.options && client.options.name || DEBUG_generatePlayerId();
   }
 }
 

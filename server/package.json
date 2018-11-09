@@ -8,11 +8,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node lib/index.js",
+    "start": "DEBUG=colyseus:* node lib/index.js",
     "build": "tsc --skipLibCheck -p .",
     "postinstall": "npm run build",
     "build:live": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
-    "ts-node": "ts-node src/index.ts",
+    "ts-node": "DEBUG=colyseus:* ts-node src/index.ts",
+    "ts-node:debug": "DEBUG=colyseus:* node --inspect-brk -r ts-node/register src/index.ts",
     "lint": "tslint -c tslint.json 'src/**/*.ts'"
   },
   "repository": {
