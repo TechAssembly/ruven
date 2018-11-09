@@ -5,7 +5,7 @@ import express from 'express';
 import { GameRoom } from './Rooms/GameRoom/GameRoom';
 
 const app: express.Application = express();
-const port = Number(process.env.PORT) || 3000;
+const port: number = Number(process.env.PORT) || 3000;
 
 const gameServer = new Server({
   server: createServer(app),
