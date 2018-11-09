@@ -13,4 +13,6 @@ const gameServer = new Server({
 
 gameServer.register('game', GameRoom);
 gameServer.matchMaker.create('game', {});
-gameServer.listen(port);
+gameServer.listen(port, undefined, undefined, () => {
+  console.log('Server is listening on port', port);
+});

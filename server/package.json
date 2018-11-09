@@ -1,11 +1,14 @@
 {
   "name": "ruven-server",
-  "version": "1.0.0",
   "description": "The server side for the Ruven Game",
+  "version": "1.0.0",
+  "engines": {
+    "node": "10.x"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run build:live",
+    "start": "node lib/index.js",
     "build": "tsc --skipLibCheck -p .",
     "build:live": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
     "ts-node": "ts-node src/index.ts",
