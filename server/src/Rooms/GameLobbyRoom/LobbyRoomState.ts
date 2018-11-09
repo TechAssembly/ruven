@@ -1,66 +1,52 @@
-import { EntityMap } from "colyseus";
-import { defaultLobbyPlayer, defaultTeamLobbyPlayer, ILobbyPlayer, ITeamLobbyPlayer, PlayerState } from "./Models";
-import { ITeam } from "./TeamDeathMatchRoom";
+import { EntityMap, Client } from 'colyseus';
 
-export type PlayersMap<T extends ILobbyPlayer> = { [id: string]: T };
+export enum PlayerState {
+  Waiting,
+  Ready,
+}
 
-export abstract class LobbyRoomState<T extends ILobbyPlayer> {
-  players: EntityMap<T> = {};
+// tslint:disable-next-line:variable-name
+let DBEUG_newPlayerId = 0;
+// tslint:disable-next-line:variable-name
+const DEBUG_generatePlayerId = () => {
+  DBEUG_newPlayerId += 1;
+  return `ruven#${DBEUG_newPlayerId}`;
+};
 
-  abstract addPlayer(playerId: string, team?: ITeam): void;
+export class LobbyPlayer {
+  public name: string;
+  constructor(
+    public client: Client,
+    public state: PlayerState = PlayerState.Waiting,
+  ) {
+    this.name = this.client.options.name || DEBUG_generatePlayerId();
+  }
 
-  abstract removePlayer(playerId: string, teamId?: number): void;
-
-  readyPlayer(playerId: string): void {
-    this.players[playerId].state = PlayerState.ready;
+  get id(): string {
+    return this.client.sessionId;
   }
 }
 
-export type RoomState = DeathMatchRoomState | TeamDeathMatchRoomState;
+export abstract class LobbyRoomState<P extends LobbyPlayer = LobbyPlayer> {
+  players: EntityMap<P> = {};
 
-export class DeathMatchRoomState extends LobbyRoomState<ILobbyPlayer> {
-  addPlayer(playerId: string): void {
-    this.players[playerId] = defaultLobbyPlayer(playerId);
+  protected abstract createNewPlayer(client: Client): P;
+
+  addPlayer(client: Client): P {
+    const player = this.createNewPlayer(client);
+    this.players[client.sessionId] = player;
+    return player;
   }
 
-  removePlayer(playerId: string): void {
-    delete this.players[playerId];
-  }
-}
-
-export class TeamDeathMatchRoomState extends LobbyRoomState<ITeamLobbyPlayer> {
-  teams: ITeam[] = [];
-
-  addPlayer(playerId: string, team: ITeam): void {
-    this.players[playerId] = defaultTeamLobbyPlayer(playerId, team.id);
-    const requiredTeam: ITeam | undefined = this.teams.find((teamInTeams: ITeam) => teamInTeams.id === team.id);
-    if (requiredTeam) {
-      requiredTeam.players.push(playerId);
-    }
-    this.teams.sort((teamA: ITeam, teamB: ITeam) => (teamA.players.length > teamB.players.length ? 1 : -1));
+  protected playerByClient(client: Client): P {
+    return this.players[client.sessionId];
   }
 
-  removePlayer(playerId: string, teamId: number): void {
-    this.teams[teamId].players.splice(this.teams[teamId].players.findIndex((id: string) => id === playerId), 1);
-    delete this.players[playerId];
-    this.teams.sort((teamA: ITeam, teamB: ITeam) => (teamA.players.length > teamB.players.length ? 1 : -1));
+  removePlayer(client: Client): void {
+    delete this.players[client.sessionId];
   }
 
-  changePlayerTeam(playerId: string, newTeamId: number): void {
-    const team: ITeam | undefined = this.teams.find(
-      (teamInTeams: ITeam) => teamInTeams.id === this.players[playerId].teamId
-    );
-    /*remove player from previous team*/
-    if (team) {
-      const playerIndex: number = team.players.findIndex((id: string) => id === playerId);
-      team.players.splice(playerIndex, 1);
-    }
-    /*add player to new team*/
-    const newTeam: ITeam | undefined = this.teams.find((teamInTeams: ITeam) => teamInTeams.id === newTeamId);
-    if (newTeam) {
-      newTeam.players.push(playerId);
-      this.players[playerId].teamId = newTeamId;
-    }
-    this.teams.sort((teamA: ITeam, teamB: ITeam) => (teamA.players.length > teamB.players.length ? 1 : -1));
+  readyPlayer(client: Client): void {
+    this.players[client.sessionId].state = PlayerState.Ready;
   }
 }

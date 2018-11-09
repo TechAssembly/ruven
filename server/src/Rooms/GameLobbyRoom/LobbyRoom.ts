@@ -1,24 +1,31 @@
-import { Client, Room } from "colyseus";
-import { RoomState } from "./LobbyRoomState";
+import { Client, Room } from 'colyseus';
+import { LobbyRoomState, LobbyPlayer, PlayerState } from './LobbyRoomState';
 
-export abstract class LobbyRoom<T extends RoomState> extends Room<T> {
-  mode: string = "";
+export const MAX_PLAYERS_IN_ROOM = 16;
 
-  onInit(options: any): void {
-    this.setState({
-      players: {},
-    });
+export abstract class LobbyRoom<
+  S extends LobbyRoomState<P>, P extends LobbyPlayer = LobbyPlayer> extends Room<S> {
+
+  public get ready(): boolean {
+    return Object.values(this.state.players).every(p => p.state === PlayerState.Ready);
   }
 
-  abstract onJoin(client: Client): void;
+  onInit(options: any): void {
+    this.setState(this.initialPlayerState());
+    this.maxClients = options.maxClients || MAX_PLAYERS_IN_ROOM;
+  }
 
-  abstract onLeave(client: Client): void;
+  protected abstract initialPlayerState(data?: any): S;
 
-  onMessage(client: Client, data: any): void {
-    return;
+  onJoin(client: Client): void {
+    this.state.addPlayer(client);
+  }
+
+  onLeave(client: Client): void {
+    this.state.removePlayer(client);
   }
 
   onReady(client: Client): void {
-    this.state.readyPlayer(client.sessionId);
+    this.state.readyPlayer(client);
   }
 }
