@@ -7,6 +7,7 @@ using UnityEngine;
 public class ColyseusLobbyManager : MonoBehaviour
 {
     public RoomLayoutGroup roomsLayout;
+    public int roomsRefreshInterval = 1;
 
     readonly AvailableRooms availableRooms = new AvailableRooms();
 
@@ -22,7 +23,7 @@ public class ColyseusLobbyManager : MonoBehaviour
     {
         QueryForAvilableRooms("team_deathmatch_lobby", "Team Deathmatch");
         QueryForAvilableRooms("free_for_all_lobby", "Free For All");
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(roomsRefreshInterval);
         roomsLayout.HandleRoomsList(availableRooms.GetAllRooms());
         StartCoroutine(GetAvailableRooms());
     }

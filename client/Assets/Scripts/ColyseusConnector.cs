@@ -8,6 +8,10 @@ public class ColyseusConnector : MonoBehaviour
     public string host = "localhost";
     public int port = 3000;
 
+    public event EventHandler OnOpen;
+    public event EventHandler OnClose;
+    public event EventHandler<ErrorEventArgs> OnError;
+
     bool clientOpen;
     public Client Client { get; private set; }
 
@@ -19,6 +23,7 @@ public class ColyseusConnector : MonoBehaviour
 
         Client.OnOpen += Client_OnOpen;
         Client.OnClose += Client_OnClose;
+        Client.OnError += Client_OnError;
 
         Debug.Log("Let's connect the client!");
         yield return StartCoroutine(Client.Connect());
@@ -39,13 +44,24 @@ public class ColyseusConnector : MonoBehaviour
     {
         clientOpen = true;
         Debug.Log("CONNECTION OPEN");
+        OnOpen?.Invoke(this, new EventArgs());
     }
 
     void Client_OnClose(object sender, EventArgs e)
     {
         clientOpen = false;
-        Debug.Log("CONNECTION CLOSED");
+        Debug.LogError("CONNECTION CLOSED");
+        OnClose?.Invoke(this, new EventArgs());
     }
+
+    void Client_OnError(object sender, ErrorEventArgs e)
+    {
+        clientOpen = false;
+        Debug.LogError("CONNECTION ERROR");
+        Debug.LogError(e);
+        OnError?.Invoke(this, e);
+    }
+
 
     #region Singleton Component Implementation
 

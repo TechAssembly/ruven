@@ -19,7 +19,7 @@ public class RoomLayoutGroup : MonoBehaviour
 
     void DeleteRoom(RoomListing listing)
     {
-        //Debug.LogFormat("Removing room {0}({1})", listing.Name, listing.Id);
+        Debug.LogFormat("Removing room {0}({1})", listing.Name, listing.Id);
         roomListings.Remove(listing);
         Destroy(listing.gameObject);
     }
@@ -31,7 +31,6 @@ public class RoomLayoutGroup : MonoBehaviour
         {
             listing = CreateNewListing();
         }
-        //Debug.LogFormat("Updating room {0}({1}) - {2}", listing.Name, listing.Id, roomData);
         listing.UpdateRoom(roomData);
     }
 
@@ -39,7 +38,7 @@ public class RoomLayoutGroup : MonoBehaviour
     {
         var listingGameObject = Instantiate(roomListingPrefab, transform, false);
         var newListing = listingGameObject.GetComponent<RoomListing>();
-        //Debug.LogFormat("Creating room {0}({1})", newListing.Name, newListing.Id);
+        Debug.LogFormat("Creating room {0}({1})", newListing.Name, newListing.Id);
         roomListings.Add(newListing);
         return newListing;
     }
