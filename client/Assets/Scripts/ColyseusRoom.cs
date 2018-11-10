@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class ColyseusRoom : MonoBehaviour
 {
     Room room;
+    public RoomData RoomData { get; private set; }
 
     public event EventHandler OnJoin;
     public event EventHandler<ErrorEventArgs> OnError;
@@ -22,14 +23,20 @@ public class ColyseusRoom : MonoBehaviour
         }
 
         room?.Leave();
+        this.RoomData = roomData;
         room = ColyseusConnector.Instance.Client.Join(roomData.Id);
         ConnectToRoom();
     }
 
-    public void CreateRoom(string lobbyName, int maxClients)
+    public void CreateRoom(RoomData.GameMode gameMode, int maxClients)
     {
         room?.Leave();
-        room = ColyseusConnector.Instance.Client.Join(lobbyName, new Dictionary<string, object>
+        RoomData = new RoomData
+        {
+            Mode = gameMode,
+            MaxClients = maxClients
+        };
+        room = ColyseusConnector.Instance.Client.Join(RoomData.GameModeToLobbyName[gameMode], new Dictionary<string, object>
         {
             { "forceCreate", true },
             { "maxClients", maxClients },

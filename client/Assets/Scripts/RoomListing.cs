@@ -17,7 +17,7 @@ public class RoomListing : MonoBehaviour
     {
         roomData = room;
         roomNameText.text = roomData.Name;
-        roomModeText.text = roomData.Mode;
+        roomModeText.text = RoomData.FormatGameMode(roomData.Mode);
         roomClientsNumberText.text = $"{roomData.CurrentClients} / {roomData.MaxClients}";
     }
 
@@ -25,4 +25,6 @@ public class RoomListing : MonoBehaviour
     {
         FindObjectOfType<ColyseusLobbyManager>().JoinRoom(roomData);
     }
+
+
 }

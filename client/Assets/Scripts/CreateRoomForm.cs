@@ -4,18 +4,6 @@ using UnityEngine.UI;
 
 public class CreateRoomForm : MonoBehaviour
 {
-    enum GameType
-    {
-        TDM = 0,
-        FFA = 1,
-    }
-
-    static readonly Dictionary<GameType, string> LobbyNames = new Dictionary<GameType, string>
-    {
-        { GameType.TDM, "team_deathmatch_lobby" },
-        { GameType.FFA, "free_for_all_lobby" },
-    };
-
     static readonly Dictionary<int, int> TeamSizeToPlayerCount = new Dictionary<int, int>
     {
         { 0, 6 },
@@ -39,14 +27,14 @@ public class CreateRoomForm : MonoBehaviour
         OnPlayerCountChange();
     }
 
-    GameType CurrentGameType => (GameType)gameTypeDropdown.value;
+    RoomData.GameMode CurrentGameType => (RoomData.GameMode)gameTypeDropdown.value;
 
     public void OnGameTypeChange()
     {
         var gameType = CurrentGameType;
         Debug.Log("Set game type to " + gameType.ToString());
-        playerCountField.SetActive(gameType == GameType.FFA);
-        teamSizeField.SetActive(gameType == GameType.TDM);
+        playerCountField.SetActive(gameType == RoomData.GameMode.FreeForAll);
+        teamSizeField.SetActive(gameType == RoomData.GameMode.TeamDeathmatch);
     }
 
     public void OnPlayerCountChange()
@@ -57,12 +45,11 @@ public class CreateRoomForm : MonoBehaviour
 
     public void CreateRoom()
     {
-        string lobbyName = LobbyNames[(GameType)gameTypeDropdown.value];
         int maxClients;
-        if (CurrentGameType == GameType.FFA)
+        if (CurrentGameType == RoomData.GameMode.FreeForAll)
             maxClients = (int)playerCountSlider.value;
         else
             maxClients = TeamSizeToPlayerCount[teamSizeDropdown.value];
-        colyseusLobbyManager.CreateRoom(lobbyName, maxClients);
+        colyseusLobbyManager.CreateRoom(CurrentGameType, maxClients);
     }
 }

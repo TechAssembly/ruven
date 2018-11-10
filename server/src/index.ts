@@ -1,4 +1,4 @@
-import { Server, RegisteredHandler } from "@techassembly/colyseus";
+import { Server, RegisteredHandler } from '@techassembly/colyseus';
 import { createServer } from 'http';
 import express, { Request, Response } from 'express';
 import cors from 'cors';
@@ -28,7 +28,7 @@ gameServer.matchMaker.create('game', {});
 gameServer.matchMaker.create('free_for_all_lobby', {});
 gameServer.matchMaker.create('team_deathmatch_lobby', {});
 
-//app.use('/colyseus', monitor(gameServer));
+// app.use('/colyseus', monitor(gameServer));
 
 gameServer.listen(port, undefined, undefined, () => {
   ruvenDebug('Server is listening on port %d', port);

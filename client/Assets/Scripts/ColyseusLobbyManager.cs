@@ -2,7 +2,7 @@
 using System.Collections;
 using Colyseus;
 using UnityEngine;
-using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class ColyseusLobbyManager : MonoBehaviour
 {
@@ -10,13 +10,6 @@ public class ColyseusLobbyManager : MonoBehaviour
     public int roomsRefreshInterval = 1;
 
     readonly AvailableRooms availableRooms = new AvailableRooms();
-    static readonly Dictionary<string, string> LobbyNameToGameType = new Dictionary<string, string>
-    {
-        {"team_deathmatch_lobby", "Team Deathmatch"},
-        {"free_for_all_lobby", "Free For All"},
-    };
-
-    Room room;
 
     IEnumerator Start()
     {
@@ -26,19 +19,20 @@ public class ColyseusLobbyManager : MonoBehaviour
 
     IEnumerator GetAvailableRooms()
     {
-        QueryForAvilableRooms("team_deathmatch_lobby", "Team Deathmatch");
-        QueryForAvilableRooms("free_for_all_lobby", "Free For All");
+        QueryForAvilableRooms( RoomData.GameMode.TeamDeathmatch);
+        QueryForAvilableRooms(RoomData.GameMode.FreeForAll);
         yield return new WaitForSeconds(roomsRefreshInterval);
         roomsLayout.HandleRoomsList(availableRooms.GetAllRooms());
         StartCoroutine(GetAvailableRooms());
     }
 
-    void QueryForAvilableRooms(string lobbyName, string visualRoomName)
+    void QueryForAvilableRooms(RoomData.GameMode gameMode)
     {
+        var lobbyName = RoomData.GameModeToLobbyName[gameMode];
         void callback(RoomAvailable[] rooms)
         {
             var wrappedRooms = rooms.ToList()
-                .Select(room => RoomData.FromColyseusRoom(visualRoomName, room)).ToList();
+                .Select(room => RoomData.FromColyseusRoom(gameMode, room)).ToList();
             availableRooms.UpdateRoomList(lobbyName, wrappedRooms);
         }
         ColyseusConnector.Instance.Client.GetAvailableRooms(lobbyName, callback);
@@ -47,11 +41,13 @@ public class ColyseusLobbyManager : MonoBehaviour
     internal void JoinRoom(RoomData roomData)
     {
         ColyseusRoom.Instance.JoinRoom(roomData);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
-    internal void CreateRoom(string lobbyName, int maxClients)
+    internal void CreateRoom(RoomData.GameMode gameMode, int maxClients)
     {
-        ColyseusRoom.Instance.CreateRoom(lobbyName, maxClients);
+        ColyseusRoom.Instance.CreateRoom(gameMode, maxClients);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
 }

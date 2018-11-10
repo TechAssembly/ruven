@@ -1,4 +1,4 @@
-import { EntityMap, Client } from "@techassembly/colyseus";
+import { EntityMap, Client } from '@techassembly/colyseus';
 import { debugLobbies } from '../../loggers';
 
 export enum PlayerState {
@@ -22,6 +22,7 @@ export class LobbyPlayer {
     client: Client,
     public state: PlayerState = PlayerState.Waiting,
   ) {
+    debugLobbies('Player recieved, options: %O', client.options);
     this.id = client.sessionId;
     this.name = client.options && client.options.name || DEBUG_generatePlayerId();
   }
