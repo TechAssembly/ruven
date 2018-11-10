@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections;
 using Colyseus;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class ColyseusLobbyManager : MonoBehaviour
 {
@@ -53,6 +54,11 @@ public class ColyseusLobbyManager : MonoBehaviour
         }
 
         room = ColyseusConnector.Instance.Client.Join(roomData.Id);
+        ConnectToRoom();
+    }
+
+    void ConnectToRoom()
+    {
         room.OnReadyToConnect += (sender, e) =>
         {
             Debug.Log("Ready to connect to room!");
@@ -60,6 +66,16 @@ public class ColyseusLobbyManager : MonoBehaviour
         };
         room.OnJoin += Room_OnJoin;
         room.OnMessage += Room_OnMessage;
+    }
+
+    internal void CreateRoom(string lobbyName, int maxClients)
+    {
+        room = ColyseusConnector.Instance.Client.Join(lobbyName, new Dictionary<string, object>
+        {
+            { "forceCreate", true },
+            { "maxClients", maxClients },
+        });
+        ConnectToRoom();
     }
 
     void Room_OnMessage(object sender, MessageEventArgs e)
