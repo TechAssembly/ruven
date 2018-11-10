@@ -1,5 +1,5 @@
-import { Direction } from './Direction';
 import { Rotation } from './Rotation';
+import { Position } from './Position';
 
 export interface BaseMessage {
   action: string;
@@ -7,7 +7,7 @@ export interface BaseMessage {
 
 export interface MoveMessage extends BaseMessage {
   action: 'move';
-  direction: Direction;
+  position: Position;
   rotation: Rotation;
 }
 
