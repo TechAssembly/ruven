@@ -11,13 +11,14 @@ public static class GameLobbyUpdatesHandler
         return ReadObject(changes["players"]).Values.Select(ReadPlayer).ToList();
     }
 
-    static GameLobbyPlayerData ReadPlayer(object playerEntry)
+    public static GameLobbyPlayerData ReadPlayer(object playerEntry)
     {
         var player = ReadObject(playerEntry);
         var playerData = new GameLobbyPlayerData
         {
             Id = player["id"] as string,
             Name = player["name"] as string,
+            Ready = player["ready"] as bool? == true,
         };
         return playerData;
     }

@@ -1,5 +1,5 @@
 import { Client, Room } from '@techassembly/colyseus';
-import { LobbyRoomState, LobbyPlayer, PlayerState } from './LobbyRoomState';
+import { LobbyRoomState, LobbyPlayer } from './LobbyRoomState';
 import { debugLobbies } from '../../loggers';
 
 export const MAX_PLAYERS_IN_ROOM = 16;
@@ -8,7 +8,7 @@ export abstract class LobbyRoom<
   S extends LobbyRoomState<P>, P extends LobbyPlayer = LobbyPlayer> extends Room<S> {
 
   public get ready(): boolean {
-    return Object.values(this.state.players).every(p => p.state === PlayerState.Ready);
+    return Object.values(this.state.players).every(p => p.ready);
   }
 
   onInit(options: any): void {

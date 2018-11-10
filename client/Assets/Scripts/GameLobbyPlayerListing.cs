@@ -3,6 +3,10 @@ using UnityEngine.UI;
 
 public class GameLobbyPlayerListing : MonoBehaviour
 {
+    static readonly Color NormalColor = new Color(255, 255, 255, 228);
+    static readonly Color OwnClientColor = new Color(0, 246, 120, 228);
+
+    public Image backgroundImage;
     public Text playerNameText;
     public Toggle playerReadyToggle;
 
@@ -16,5 +20,6 @@ public class GameLobbyPlayerListing : MonoBehaviour
         playerData = player;
         playerNameText.text = playerData.Name;
         playerReadyToggle.isOn = playerData.Ready;
+        backgroundImage.color = Id == ColyseusRoom.Instance.Room.sessionId ? OwnClientColor : NormalColor;
     }
 }

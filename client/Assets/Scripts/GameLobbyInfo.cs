@@ -9,7 +9,7 @@ public class GameLobbyInfo : MonoBehaviour
 
     void Update()
     {
-        RoomData data = ColyseusRoom.Instance.RoomData;
+        RoomData data = ColyseusRoom.Instance?.RoomData;
         if (data == null)
             return;
 

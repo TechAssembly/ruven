@@ -1,11 +1,6 @@
 import { EntityMap, Client } from '@techassembly/colyseus';
 import { debugLobbies } from '../../loggers';
 
-export enum PlayerState {
-  Waiting,
-  Ready,
-}
-
 // tslint:disable-next-line:variable-name
 let DBEUG_newPlayerId = 0;
 // tslint:disable-next-line:variable-name
@@ -20,7 +15,7 @@ export class LobbyPlayer {
 
   constructor(
     client: Client,
-    public state: PlayerState = PlayerState.Waiting,
+    public ready = false,
   ) {
     debugLobbies('Player recieved, options: %O', client.options);
     this.id = client.sessionId;
@@ -48,6 +43,6 @@ export abstract class LobbyRoomState<P extends LobbyPlayer = LobbyPlayer> {
   }
 
   readyPlayer(client: Client): void {
-    this.players[client.sessionId].state = PlayerState.Ready;
+    this.players[client.sessionId].ready = true;
   }
 }

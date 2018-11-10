@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class ColyseusRoom : MonoBehaviour
 {
-    Room room;
+    public Room Room { get; private set; }
     public RoomData RoomData { get; private set; }
 
     public event EventHandler OnJoin;
@@ -16,27 +16,27 @@ public class ColyseusRoom : MonoBehaviour
 
     public void JoinRoom(RoomData roomData)
     {
-        if (room != null && room.id == roomData.Id)
+        if (Room != null && Room.id == roomData.Id)
         {
             Debug.Log("Already joined room " + roomData.Id);
             return;
         }
 
-        room?.Leave();
-        this.RoomData = roomData;
-        room = ColyseusConnector.Instance.Client.Join(roomData.Id);
+        Room?.Leave();
+        RoomData = roomData;
+        Room = ColyseusConnector.Instance.Client.Join(roomData.Id);
         ConnectToRoom();
     }
 
     public void CreateRoom(RoomData.GameMode gameMode, int maxClients)
     {
-        room?.Leave();
+        Room?.Leave();
         RoomData = new RoomData
         {
             Mode = gameMode,
             MaxClients = maxClients
         };
-        room = ColyseusConnector.Instance.Client.Join(RoomData.GameModeToLobbyName[gameMode], new Dictionary<string, object>
+        Room = ColyseusConnector.Instance.Client.Join(RoomData.GameModeToLobbyName[gameMode], new Dictionary<string, object>
         {
             { "forceCreate", true },
             { "maxClients", maxClients },
@@ -46,17 +46,17 @@ public class ColyseusRoom : MonoBehaviour
 
     void ConnectToRoom()
     {
-        room.OnReadyToConnect += (sender, e) =>
+        Room.OnReadyToConnect += (sender, e) =>
         {
             Debug.Log("Ready to connect to room!");
-            StartCoroutine(room.Connect());
+            StartCoroutine(Room.Connect());
         };
 
-        room.OnJoin += Room_OnJoin;
-        room.OnMessage += Room_OnMessage;
-        room.OnLeave += Room_OnLeave;
-        room.OnError += Room_OnError;
-        room.OnStateChange += Room_OnStateChange;
+        Room.OnJoin += Room_OnJoin;
+        Room.OnMessage += Room_OnMessage;
+        Room.OnLeave += Room_OnLeave;
+        Room.OnError += Room_OnError;
+        Room.OnStateChange += Room_OnStateChange;
     }
 
     void Room_OnMessage(object sender, MessageEventArgs e)
@@ -111,10 +111,10 @@ public class ColyseusRoom : MonoBehaviour
 
     void OnDestroy()
     {
-        if (this != Instance || room == null)
+        if (this != Instance || Room == null)
             return;
 
-        room.Leave();
+        Room.Leave();
     }
 
     #endregion Singleton Component Implementation

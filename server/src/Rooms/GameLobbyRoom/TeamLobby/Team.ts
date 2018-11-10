@@ -1,14 +1,14 @@
 import { Client } from '@techassembly/colyseus';
-import { LobbyPlayer, PlayerState } from '../LobbyRoomState';
+import { LobbyPlayer } from '../LobbyRoomState';
 import { debugTeam, debugErrors } from '../../../loggers';
 
 export class TeamLobbyPlayer extends LobbyPlayer {
   constructor(
     client: Client,
-    state: PlayerState = PlayerState.Waiting,
+    ready = false,
     public team: string | null = null,
   ) {
-    super(client, state);
+    super(client, ready);
   }
 }
 
