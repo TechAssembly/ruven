@@ -2252,51 +2252,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 28}
   m_Pivot: {x: 0.5, y: 1}
---- !u!1 &1060498400
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1060498402}
-  - component: {fileID: 1060498401}
-  m_Layer: 0
-  m_Name: ColyseusClient
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1060498401
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1060498400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1118ebbc94f943d0b7fef2c159af34f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  host: localhost
-  port: 3000
---- !u!4 &1060498402
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1060498400}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.34, y: 2.67, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1139040973
 GameObject:
   m_ObjectHideFlags: 0
@@ -4602,3 +4557,141 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2132200803}
   m_CullTransparentMesh: 0
+--- !u!1001 &1255859202423282048
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1255859201871032930, guid: 7a53a790a2eeb4a779d3143ae1746703,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 1255859201871032930, guid: 7a53a790a2eeb4a779d3143ae1746703,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.67
+      objectReference: {fileID: 0}
+    - target: {fileID: 1255859201871032930, guid: 7a53a790a2eeb4a779d3143ae1746703,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1255859201871032930, guid: 7a53a790a2eeb4a779d3143ae1746703,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1255859201871032930, guid: 7a53a790a2eeb4a779d3143ae1746703,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1255859201871032930, guid: 7a53a790a2eeb4a779d3143ae1746703,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1255859201871032930, guid: 7a53a790a2eeb4a779d3143ae1746703,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1255859201871032930, guid: 7a53a790a2eeb4a779d3143ae1746703,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1255859201871032930, guid: 7a53a790a2eeb4a779d3143ae1746703,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1255859201871032930, guid: 7a53a790a2eeb4a779d3143ae1746703,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1255859201871032930, guid: 7a53a790a2eeb4a779d3143ae1746703,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1255859201871032928, guid: 7a53a790a2eeb4a779d3143ae1746703,
+        type: 3}
+      propertyPath: m_Name
+      value: ColyseusClient
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7a53a790a2eeb4a779d3143ae1746703, type: 3}
+--- !u!1001 &7877187576211237974
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7877187576086376770, guid: e3234b36aee1440d1857c6b4f9f1c711,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -13.468724
+      objectReference: {fileID: 0}
+    - target: {fileID: 7877187576086376770, guid: e3234b36aee1440d1857c6b4f9f1c711,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.10682
+      objectReference: {fileID: 0}
+    - target: {fileID: 7877187576086376770, guid: e3234b36aee1440d1857c6b4f9f1c711,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 90.3048
+      objectReference: {fileID: 0}
+    - target: {fileID: 7877187576086376770, guid: e3234b36aee1440d1857c6b4f9f1c711,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7877187576086376770, guid: e3234b36aee1440d1857c6b4f9f1c711,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7877187576086376770, guid: e3234b36aee1440d1857c6b4f9f1c711,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7877187576086376770, guid: e3234b36aee1440d1857c6b4f9f1c711,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7877187576086376770, guid: e3234b36aee1440d1857c6b4f9f1c711,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7877187576086376770, guid: e3234b36aee1440d1857c6b4f9f1c711,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7877187576086376770, guid: e3234b36aee1440d1857c6b4f9f1c711,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7877187576086376770, guid: e3234b36aee1440d1857c6b4f9f1c711,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7877187576086376772, guid: e3234b36aee1440d1857c6b4f9f1c711,
+        type: 3}
+      propertyPath: m_Name
+      value: ColyseusRoom
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e3234b36aee1440d1857c6b4f9f1c711, type: 3}

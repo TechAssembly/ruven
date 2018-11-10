@@ -85,7 +85,7 @@ namespace Colyseus
 			}
 
 			// TODO: this may not be a good idea?
-			foreach (var room in this.rooms) {
+            foreach (var room in new Dictionary<string, Room>(this.rooms)) {
 				room.Value.Recv ();
 			}
 		}
