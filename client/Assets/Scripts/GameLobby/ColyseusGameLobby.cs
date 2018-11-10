@@ -14,7 +14,6 @@ public class ColyseusGameLobby : MonoBehaviour
         ColyseusRoom.Instance.OnLeave += Instance_OnLeave;
         ColyseusRoom.Instance.OnMessage += Instance_OnMessage;
         ColyseusRoom.Instance.OnStateChange += Instance_OnStateChange;
-        ColyseusRoom.Instance.Room.Listen("players/:id", HandleAction);
     }
 
     void Unsubscribe()
