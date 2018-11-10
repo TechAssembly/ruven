@@ -14,6 +14,8 @@ public class ColyseusRoom : MonoBehaviour
     public event EventHandler<MessageEventArgs> OnMessage;
     public event EventHandler<RoomUpdateEventArgs> OnStateChange;
 
+    public string PlayerId => Room?.sessionId;
+
     public void JoinRoom(RoomData roomData)
     {
         if (Room != null && Room.id == roomData.Id)
@@ -28,19 +30,34 @@ public class ColyseusRoom : MonoBehaviour
         ConnectToRoom();
     }
 
+    public void JoinRoom(string roomIdOrLobbyName)
+    {
+        if (Room != null && Room.id == roomIdOrLobbyName)
+        {
+            Debug.Log("Already joined room " + roomIdOrLobbyName);
+            return;
+        }
+
+        Room?.Leave();
+        RoomData = null;
+        Room = ColyseusConnector.Instance.Client.Join(roomIdOrLobbyName);
+        ConnectToRoom();
+    }
+
     public void CreateRoom(RoomData.GameMode gameMode, int maxClients)
     {
         Room?.Leave();
-        RoomData = new RoomData
-        {
-            Mode = gameMode,
-            MaxClients = maxClients
-        };
+
         Room = ColyseusConnector.Instance.Client.Join(RoomData.GameModeToLobbyName[gameMode], new Dictionary<string, object>
         {
             { "forceCreate", true },
             { "maxClients", maxClients },
         });
+        RoomData = new RoomData
+        {
+            Mode = gameMode,
+            MaxClients = maxClients,
+        };
         ConnectToRoom();
     }
 

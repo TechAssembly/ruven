@@ -1,4 +1,3 @@
-import { Rotation } from './Rotation';
 import { Position } from './Position';
 
 export interface BaseMessage {
@@ -8,7 +7,7 @@ export interface BaseMessage {
 export interface MoveMessage extends BaseMessage {
   action: 'move';
   position: Position;
-  rotation: Rotation;
+  rotation: number;
 }
 
 export type GameRoomMessage =

@@ -9,20 +9,20 @@ public class ColyseusGameLobby : MonoBehaviour
 
     void Start()
     {
-        ColyseusRoom.Instance.OnJoin += Instance_OnJoin;
-        ColyseusRoom.Instance.OnError += Instance_OnError;
-        ColyseusRoom.Instance.OnLeave += Instance_OnLeave;
-        ColyseusRoom.Instance.OnMessage += Instance_OnMessage;
-        ColyseusRoom.Instance.OnStateChange += Instance_OnStateChange;
+        ColyseusRoom.Instance.OnJoin += Room_OnJoin;
+        ColyseusRoom.Instance.OnError += Room_OnError;
+        ColyseusRoom.Instance.OnLeave += Room_OnLeave;
+        ColyseusRoom.Instance.OnMessage += Room_OnMessage;
+        ColyseusRoom.Instance.OnStateChange += Room_OnStateChange;
     }
 
     void Unsubscribe()
     {
-        ColyseusRoom.Instance.OnJoin -= Instance_OnJoin;
-        ColyseusRoom.Instance.OnError -= Instance_OnError;
-        ColyseusRoom.Instance.OnLeave -= Instance_OnLeave;
-        ColyseusRoom.Instance.OnMessage -= Instance_OnMessage;
-        ColyseusRoom.Instance.OnStateChange -= Instance_OnStateChange;
+        ColyseusRoom.Instance.OnJoin -= Room_OnJoin;
+        ColyseusRoom.Instance.OnError -= Room_OnError;
+        ColyseusRoom.Instance.OnLeave -= Room_OnLeave;
+        ColyseusRoom.Instance.OnMessage -= Room_OnMessage;
+        ColyseusRoom.Instance.OnStateChange -= Room_OnStateChange;
     }
 
     public void SendPlayerReady()
@@ -33,23 +33,23 @@ public class ColyseusGameLobby : MonoBehaviour
         });
     }
 
-    void Instance_OnJoin(object sender, EventArgs e)
+    void Room_OnJoin(object sender, EventArgs e)
     {
         Debug.Log("Joined room!!!");
     }
 
-    void Instance_OnError(object sender, ErrorEventArgs e)
+    void Room_OnError(object sender, ErrorEventArgs e)
     {
         Debug.LogError("Room error = " + e);
     }
 
-    void Instance_OnLeave(object sender, EventArgs e)
+    void Room_OnLeave(object sender, EventArgs e)
     {
         Debug.Log("Leaving room - unsubscribing all events");
         Unsubscribe();
     }
 
-    void Instance_OnStateChange(object sender, RoomUpdateEventArgs e)
+    void Room_OnStateChange(object sender, RoomUpdateEventArgs e)
     {
         Debug.Log("OnStateChange");
         Debug.Log("Is First State = " + e.isFirstState);
@@ -58,7 +58,7 @@ public class ColyseusGameLobby : MonoBehaviour
         playersListLayoutGroup.HandlePlayersList(players);
     }
 
-    void Instance_OnMessage(object sender, MessageEventArgs e)
+    void Room_OnMessage(object sender, MessageEventArgs e)
     {
         Debug.Log("Received message = " + e);
     }

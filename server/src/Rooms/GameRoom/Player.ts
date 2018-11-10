@@ -1,5 +1,4 @@
 import { Position } from './Position';
-import { Rotation } from './Rotation';
 
 export class Player {
   private static playerCounter: number;
@@ -8,7 +7,7 @@ export class Player {
 
   constructor(
     public position: Position = new Position(),
-    public rotation: Rotation = new Rotation(),
+    public rotation = 0,
   ) {
     this.name = `player${Player.playerCounter}`;
     Player.playerCounter += 1;

@@ -20,6 +20,6 @@ public class GameLobbyPlayerListing : MonoBehaviour
         playerData = player;
         playerNameText.text = playerData.Name;
         playerReadyToggle.isOn = playerData.Ready;
-        backgroundImage.color = Id == ColyseusRoom.Instance.Room.sessionId ? OwnClientColor : NormalColor;
+        backgroundImage.color = Id == ColyseusRoom.Instance.PlayerId ? OwnClientColor : NormalColor;
     }
 }

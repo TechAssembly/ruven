@@ -3,13 +3,13 @@ Game for the Github Game Off 2018 - Themed HYBRID!
 
 # Running the server
 * `npm install`
-* development: `npm run ts-node`
+* development: `npm run dev`
 * production: `npm start`
 
 A web monitor client is available at `<host and port>/colyseus` (by default `localhost:3000/colyseus`)
 
 # Debugging the server
-* `npm run ts-node:debug`
+* `npm run dev:debug`
 * open chrome at `about:inspect`
 * open choose the server from the list, and enjoy debugging :)
 
