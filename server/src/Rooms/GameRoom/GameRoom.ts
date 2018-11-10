@@ -1,4 +1,4 @@
-import { Room, Client } from 'colyseus';
+import { Room, Client } from "@techassembly/colyseus";
 import { GameState } from './GameState';
 import { GameRoomMessage } from './Messages';
 

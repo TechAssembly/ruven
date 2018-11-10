@@ -1,4 +1,4 @@
-import { Client, Room } from 'colyseus';
+import { Client, Room } from "@techassembly/colyseus";
 import { LobbyRoomState, LobbyPlayer, PlayerState } from './LobbyRoomState';
 import { debugLobbies } from '../../loggers';
 

@@ -1,5 +1,5 @@
 import { LobbyPlayer, PlayerState, LobbyRoomState } from '../LobbyRoomState';
-import { EntityMap, Client } from 'colyseus';
+import { EntityMap, Client } from "@techassembly/colyseus";
 import uuid = require('uuid');
 import { TeamLobbyPlayer, Team, sortTeamsByPlayerCount } from './Team';
 import { debugErrors } from '../../../loggers';

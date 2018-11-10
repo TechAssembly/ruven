@@ -11,8 +11,8 @@
     "start": "DEBUG=ruven* node lib/index.js",
     "build": "tsc --skipLibCheck -p .",
     "postinstall": "npm run build",
-    "ts-node": "DEBUG=ruven* ts-node src/index.ts",
-    "ts-node:debug": "DEBUG=ruven* node --inspect-brk -r ts-node/register src/index.ts",
+    "dev": "DEBUG=ruven* ts-node src/index.ts",
+    "dev:debug": "DEBUG=ruven* node --inspect-brk -r ts-node/register src/index.ts",
     "lint": "tslint -c tslint.json 'src/**/*.ts'"
   },
   "repository": {
@@ -36,9 +36,9 @@
     "typescript": "^3.1.6"
   },
   "dependencies": {
+    "@techassembly/colyseus": "^0.9.19",
     "@colyseus/monitor": "^0.1.10",
     "@types/debug": "0.0.31",
-    "colyseus": "^0.9.19",
     "cors": "^2.8.5",
     "debug": "^4.1.0",
     "express": "^4.16.4",

@@ -1,4 +1,4 @@
-import { EntityMap, Client } from 'colyseus';
+import { EntityMap, Client } from "@techassembly/colyseus";
 import { MoveMessage } from './Messages';
 import { Player } from './Player';
 import { Direction } from './Direction';

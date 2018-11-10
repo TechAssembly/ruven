@@ -1,4 +1,4 @@
-import { EntityMap, Client } from 'colyseus';
+import { EntityMap, Client } from "@techassembly/colyseus";
 import { debugLobbies } from '../../loggers';
 
 export enum PlayerState {

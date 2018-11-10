@@ -1,6 +1,6 @@
 import { LobbyRoom } from './LobbyRoom';
 import { LobbyRoomState, LobbyPlayer } from './LobbyRoomState';
-import { Client } from 'colyseus';
+import { Client } from "@techassembly/colyseus";
 
 export class FreeForAllRoomState extends LobbyRoomState {
   protected createNewPlayer(client: Client): LobbyPlayer {
