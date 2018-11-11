@@ -4208,7 +4208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f00031fa3a304923b66cedf5cda0309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomsLayout: {fileID: 0}
+  roomsLayout: {fileID: 995520359}
   roomsRefreshInterval: 1
 --- !u!4 &1996583271
 Transform:
