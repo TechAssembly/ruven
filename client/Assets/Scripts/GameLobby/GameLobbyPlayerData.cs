@@ -3,4 +3,5 @@
     public string Name { get; set; }
     public string Id { get; set; }
     public bool Ready { get; set; }
+    public bool Owner { get; set; }
 }

@@ -9,6 +9,7 @@ public class GameLobbyPlayerListing : MonoBehaviour
     public Image backgroundImage;
     public Text playerNameText;
     public Toggle playerReadyToggle;
+    public Image ownerImage;
 
     GameLobbyPlayerData playerData;
 
@@ -21,5 +22,6 @@ public class GameLobbyPlayerListing : MonoBehaviour
         playerNameText.text = playerData.Name;
         playerReadyToggle.isOn = playerData.Ready;
         backgroundImage.color = Id == ColyseusRoom.Instance.PlayerId ? OwnClientColor : NormalColor;
+        ownerImage.enabled = player.Owner;
     }
 }

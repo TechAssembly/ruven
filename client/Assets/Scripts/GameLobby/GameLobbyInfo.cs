@@ -9,10 +9,19 @@ public class GameLobbyInfo : MonoBehaviour
 
     void Update()
     {
-        RoomData data = ColyseusRoom.Instance?.RoomData;
+        var room = ColyseusRoom.Instance;
+        if (room == null)
+            return;
+
+        RoomData data = room.RoomData;
         if (data == null)
             return;
 
+        UpdateRoomInfo(data);
+    }
+
+    private void UpdateRoomInfo(RoomData data)
+    {
         gameTypeText.text = RoomData.FormatGameMode(data.Mode);
         if (data.Mode == RoomData.GameMode.FreeForAll)
         {

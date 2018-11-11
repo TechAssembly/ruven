@@ -1,5 +1,6 @@
 import { EntityMap, Client } from '@techassembly/colyseus';
 import { debugLobbies } from '../../loggers';
+import { randomElement } from '../../utils';
 
 // tslint:disable-next-line:variable-name
 let DBEUG_newPlayerId = 0;
@@ -25,10 +26,14 @@ export class LobbyPlayer {
 
 export abstract class LobbyRoomState<P extends LobbyPlayer = LobbyPlayer> {
   players: EntityMap<P> = {};
+  roomOwner: string | null = null;
 
   protected abstract createNewPlayer(client: Client): P;
 
   addPlayer(client: Client): P {
+    if (this.roomOwner === null) {
+      this.roomOwner = client.sessionId;
+    }
     const player = this.createNewPlayer(client);
     this.players[client.sessionId] = player;
     return player;
@@ -40,6 +45,10 @@ export abstract class LobbyRoomState<P extends LobbyPlayer = LobbyPlayer> {
 
   removePlayer(client: Client): void {
     delete this.players[client.sessionId];
+    const playerIds = Object.keys(this.players);
+    if (client.sessionId === this.roomOwner && playerIds.length > 0) {
+      this.roomOwner = randomElement(playerIds);
+    }
   }
 
   readyPlayer(client: Client): void {

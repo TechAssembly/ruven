@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Colyseus;
 using GameDevWare.Serialization;
 using UnityEngine;
@@ -6,6 +7,12 @@ using UnityEngine;
 public class ColyseusGameLobby : MonoBehaviour
 {
     public PlayersListLayoutGroup playersListLayoutGroup;
+
+    [HideInInspector]
+    public bool IsOwner { get; private set; }
+    [HideInInspector]
+    public bool AllPlayersReady { get; private set; }
+    public bool IsReady { get; private set; }
 
     void Start()
     {
@@ -33,6 +40,17 @@ public class ColyseusGameLobby : MonoBehaviour
         });
     }
 
+    public void SendStartGame()
+    {
+        if (!IsOwner || !AllPlayersReady)
+            return;
+
+        ColyseusRoom.Instance.Room.Send(new IndexedDictionary<string, object>
+        {
+            {"action", "start"},
+        });
+    }
+
     void Room_OnJoin(object sender, EventArgs e)
     {
         Debug.Log("Joined room!!!");
@@ -54,8 +72,13 @@ public class ColyseusGameLobby : MonoBehaviour
         Debug.Log("OnStateChange");
         Debug.Log("Is First State = " + e.isFirstState);
         Debug.Log("State = " + e.state);
-        var players = GameLobbyUpdatesHandler.ReadPlayers(e.state);
-        playersListLayoutGroup.HandlePlayersList(players);
+
+        var update = GameLobbyUpdatesParser.Parse(e.state);
+        playersListLayoutGroup.HandlePlayersList(update.Players);
+        string myId = ColyseusRoom.Instance.Room.sessionId;
+        IsOwner = myId == update.OwnerId;
+        IsReady = update.Players.FirstOrDefault(p => p.Id == myId)?.Ready ?? false;
+        AllPlayersReady = update.Players.All(p => p.Ready);
     }
 
     void Room_OnMessage(object sender, MessageEventArgs e)
