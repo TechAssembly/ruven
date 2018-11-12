@@ -3,6 +3,7 @@ using System.Linq;
 using Colyseus;
 using GameDevWare.Serialization;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ColyseusGameLobby : MonoBehaviour
 {
@@ -83,6 +84,17 @@ public class ColyseusGameLobby : MonoBehaviour
 
     void Room_OnMessage(object sender, MessageEventArgs e)
     {
-        Debug.Log("Received message = " + e);
+        var message = e.message as IndexedDictionary<string, object>;
+        var action = message["action"] as string;
+        if (action != "join_game")
+        {
+            Debug.LogError("Received GameLobby message other than to start a game");
+            return;
+        }
+        var roomId = message["roomId"] as string;
+        Debug.Log("Received START_GAME with ROOM_ID = " + roomId);
+        ColyseusRoom.Instance.JoinRoom(roomId);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
     }
 }

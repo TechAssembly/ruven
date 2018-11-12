@@ -2,6 +2,7 @@ import { Client } from '@techassembly/colyseus';
 import { LobbyRoom } from '../LobbyRoom';
 import { TeamLobbyRoomState } from './TeamLobbyRoomState';
 import { TeamLobbyMessages } from './TeamLobbyMessages';
+import { debugErrors } from '../../../loggers';
 
 export const DEFAULT_TEAM_COUNT: number = 2;
 
@@ -20,6 +21,14 @@ export class TeamLobbyRoom extends LobbyRoom<TeamLobbyRoomState> {
         break;
       case 'change_team':
         this.state.changePlayerTeam(client, data.requestedTeamId);
+        break;
+      case 'start':
+        this.onStart(client);
+        break;
+      default:
+        debugErrors(
+          'Client %o sent invalid %o action on TDM lobby %o',
+          client.sessionId, (<any>data).action, this.roomId);
         break;
     }
   }

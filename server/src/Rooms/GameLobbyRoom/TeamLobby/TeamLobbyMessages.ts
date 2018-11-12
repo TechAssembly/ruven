@@ -1,6 +1,4 @@
-export interface ReadyMessage {
-  action: 'ready';
-}
+import { StartMessage, ReadyMessage } from '../LobbyMessages';
 
 export interface ChangeTeamMessage {
   action: 'change_team';
@@ -8,5 +6,6 @@ export interface ChangeTeamMessage {
 }
 
 export type TeamLobbyMessages =
-  | ChangeTeamMessage
-  | ReadyMessage;
+  | StartMessage
+  | ReadyMessage
+  | ChangeTeamMessage;
