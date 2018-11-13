@@ -8,6 +8,9 @@ public class ColyseusServerStatus : MonoBehaviour
 
     void Start()
     {
+        if (ColyseusConnector.Instance.ClientOpen)
+            currentStatusText = "Connected";
+
         ColyseusConnector.Instance.OnOpen += (sender, e) => currentStatusText = "Connected";
         ColyseusConnector.Instance.OnClose += (sender, e) => currentStatusText = "Disconnected";
         ColyseusConnector.Instance.OnError += (sender, e) => currentStatusText = "Error";

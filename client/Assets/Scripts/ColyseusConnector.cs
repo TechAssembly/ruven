@@ -5,19 +5,31 @@ using UnityEngine;
 
 public class ColyseusConnector : MonoBehaviour
 {
-    public string host = "localhost";
-    public int port = 3000;
+    public string defaultHost = "localhost";
+    public int defaultPort = 3000;
+    public bool connectOnStart = true;
 
     public event EventHandler OnOpen;
     public event EventHandler OnClose;
     public event EventHandler<ErrorEventArgs> OnError;
 
-    bool clientOpen;
+    public bool ClientOpen { get; private set; }
     public Client Client { get; private set; }
 
-    IEnumerator Start()
+    void Start()
     {
-        string uri = $"ws://{host}:{port}";
+        if (connectOnStart)
+            ConnectToServer($"{defaultHost}:{defaultPort}");
+    }
+
+    public void ConnectToServer(string address)
+    {
+        StartCoroutine(ServerConnectionCoroutine(address));
+    }
+
+    IEnumerator ServerConnectionCoroutine(string address)
+    {
+        string uri = $"ws://{address}";
         Debug.Log("Conencting to Colyseus on: " + uri);
         Client = new Client(uri);
 
@@ -31,32 +43,32 @@ public class ColyseusConnector : MonoBehaviour
         while (true)
         {
             Client.Recv();
-            yield return 0;
+            yield return null;
         }
     }
 
     public IEnumerator EnsureClientOpen()
     {
-        yield return new WaitUntil(() => clientOpen);
+        yield return new WaitUntil(() => ClientOpen);
     }
 
     void Client_OnOpen(object sender, EventArgs e)
     {
-        clientOpen = true;
+        ClientOpen = true;
         Debug.Log("CONNECTION OPEN");
-        OnOpen?.Invoke(this, new EventArgs());
+        OnOpen?.Invoke(this, e);
     }
 
     void Client_OnClose(object sender, EventArgs e)
     {
-        clientOpen = false;
+        ClientOpen = false;
         Debug.LogError("CONNECTION CLOSED");
-        OnClose?.Invoke(this, new EventArgs());
+        OnClose?.Invoke(this, e);
     }
 
     void Client_OnError(object sender, ErrorEventArgs e)
     {
-        clientOpen = false;
+        ClientOpen = false;
         Debug.LogError("CONNECTION ERROR");
         Debug.LogError(e);
         OnError?.Invoke(this, e);

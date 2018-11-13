@@ -19,7 +19,7 @@ public class ColyseusLobbyManager : MonoBehaviour
 
     IEnumerator GetAvailableRooms()
     {
-        QueryForAvilableRooms( RoomData.GameMode.TeamDeathmatch);
+        QueryForAvilableRooms(RoomData.GameMode.TeamDeathmatch);
         QueryForAvilableRooms(RoomData.GameMode.FreeForAll);
         yield return new WaitForSeconds(roomsRefreshInterval);
         roomsLayout.HandleRoomsList(availableRooms.GetAllRooms());

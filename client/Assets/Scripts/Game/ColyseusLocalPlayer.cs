@@ -6,6 +6,10 @@ public class ColyseusLocalPlayer : MonoBehaviour
     Vector3 lastPosition = Vector3.zero;
     Quaternion lastRotation = Quaternion.identity;
 
+    void Start()
+    {
+        game.OnPlayerMove(transform);
+    }
 
     void Update()
     {

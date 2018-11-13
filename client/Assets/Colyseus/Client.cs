@@ -184,6 +184,8 @@ namespace Colyseus
 			var message = MsgPack.Deserialize<List<object>> (new MemoryStream(recv));
 			var code = (byte) message [0];
 
+            Debug.Log("Received code " + code);
+
 			if (code == Protocol.USER_ID) {
 				this.id = (string) message [1];
 
