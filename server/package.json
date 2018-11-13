@@ -12,7 +12,7 @@
     "build": "tsc --skipLibCheck -p .",
     "postinstall": "npm run build",
     "dev": "DEBUG=ruven*,colyseus:* ts-node src/index.ts",
-    "dev:debug": "DEBUG=ruven* node --inspect-brk -r ts-node/register src/index.ts",
+    "dev:debug": "DEBUG=ruven*,colyseus:* node --inspect-brk lib/index.js",
     "lint": "tslint -c tslint.json 'src/**/*.ts'"
   },
   "repository": {

@@ -95,7 +95,7 @@ namespace Colyseus
 		/// </summary>
 		/// <param name="roomName">The name of the Room to join.</param>
 		/// <param name="options">Custom join request options</param>
-		public Room Join (string roomName, Dictionary<string, object> options = null)
+		public Room Join(string roomName, Dictionary<string, object> options = null)
 		{
 			if (options == null) {
 				options = new Dictionary<string, object> ();

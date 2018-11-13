@@ -16,6 +16,8 @@ public class ColyseusRoom : MonoBehaviour
 
     public string PlayerId => Room?.sessionId;
 
+    string PlayerName => PlayerPrefs.GetString("ColyseusPlayerName", PlayerId ?? "Unnamed");
+
     public void JoinRoom(RoomData roomData)
     {
         if (Room != null && Room.id == roomData.Id)
@@ -26,7 +28,10 @@ public class ColyseusRoom : MonoBehaviour
 
         Room?.Leave();
         RoomData = roomData;
-        Room = ColyseusConnector.Instance.Client.Join(roomData.Id);
+        Room = ColyseusConnector.Instance.Client.Join(roomData.Id, new Dictionary<string, object>
+        {
+            { "name", PlayerName }
+        });
         ConnectToRoom();
     }
 

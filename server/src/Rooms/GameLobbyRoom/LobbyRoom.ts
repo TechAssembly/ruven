@@ -1,4 +1,4 @@
-import { Client, Room } from '@techassembly/colyseus';
+import { Client, Room, EntityMap } from '@techassembly/colyseus';
 import { LobbyRoomState, LobbyPlayer } from './LobbyRoomState';
 import { debugLobbies } from '../../loggers';
 import { MatchMaker } from '@techassembly/colyseus/lib/MatchMaker';
@@ -8,9 +8,7 @@ export const MAX_PLAYERS_IN_ROOM = 16;
 export abstract class LobbyRoom<
   S extends LobbyRoomState<P>, P extends LobbyPlayer = LobbyPlayer> extends Room<S> {
 
-  public allPlayersReady(): boolean {
-    return Object.values(this.state.players).every(p => p.ready);
-  }
+  incomingClientOptions: EntityMap<any> = {};
 
   onInit(options: any): void {
     this.setState(this.initialPlayerState());
@@ -19,8 +17,21 @@ export abstract class LobbyRoom<
 
   protected abstract initialPlayerState(data?: any): S;
 
+  requestJoin(options: any, isNew?: boolean): number | boolean {
+    if (options.sessionId && options.name) {
+      this.incomingClientOptions[options.sessionId] = options;
+    }
+    return true;
+  }
+
+  public allPlayersReady(): boolean {
+    return Object.values(this.state.players).every(p => p.ready);
+  }
+
   onJoin(client: Client): void {
     debugLobbies('Player %o joined lobby %o', client.sessionId, this.roomId);
+    client.options = { ...client.options, ...this.incomingClientOptions[client.sessionId] };
+    delete this.incomingClientOptions[client.sessionId];
     this.state.addPlayer(client);
   }
 
