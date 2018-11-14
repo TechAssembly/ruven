@@ -49,4 +49,4 @@ export class Team {
 }
 
 export const sortTeamsByPlayerCount = (teamA: Team, teamB: Team) =>
-  teamA.players.length > teamB.players.length ? 1 : -1;
+  teamA.players.length < teamB.players.length ? 1 : -1;
