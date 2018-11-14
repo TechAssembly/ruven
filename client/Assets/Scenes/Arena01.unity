@@ -1655,7 +1655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e15e66f175258064d944ae13e92576b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 2.5
+  MoveSpeed: 5
   childCamera: {fileID: 534669904}
   LookSensitivity: 3
   LookSmooth: 2
@@ -5007,6 +5007,7 @@ GameObject:
   - component: {fileID: 534669905}
   - component: {fileID: 534669904}
   - component: {fileID: 534669903}
+  - component: {fileID: 534669906}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5078,6 +5079,24 @@ Transform:
   m_Father: {fileID: 147144640}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 25, y: 0, z: 0}
+--- !u!114 &534669906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534669902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 150977812a975e44790918927f8a59b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minDistance: 1
+  maxDistance: 15
+  smooth: 10
+  dollyDirectionAdjustment: {x: 0, y: 0, z: 0}
+  distance: 0
 --- !u!1001 &572086718
 PrefabInstance:
   m_ObjectHideFlags: 0
