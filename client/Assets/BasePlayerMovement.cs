@@ -1,11 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BasePlayerMovement : MonoBehaviour
 {
 
-    public float MoveSpeed = 2.5f;
+    public float MoveSpeed = 5.0f;
     public Camera childCamera = null;
     public float LookSensitivity = 3.0f; //amount of look per mouse move, higher look faster
     public float LookSmooth = 2.0f; //less jagged look movment
@@ -34,22 +35,25 @@ public class BasePlayerMovement : MonoBehaviour
 
         ControlMovement();
         ControlLookAround();
+        ControlSpecialMoves();
 
         void ControlMovement()
         {
             float xAxisMove = Input.GetAxis("Horizontal");
             float zAxisMove = Input.GetAxis("Vertical");
 
+          
+
             //press shift and character walks
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
-                MoveSpeed = 1f;
+                MoveSpeed = 2.0f;
                 MoveType = "Walk";
             }
             //raise shift and character runs
             if (Input.GetKeyUp(KeyCode.LeftShift))
             {
-                MoveSpeed = 2.5f;
+                MoveSpeed = 5.0f;
                 MoveType = "Run";
             }
 
@@ -58,7 +62,8 @@ public class BasePlayerMovement : MonoBehaviour
             if(xAxisMove != 0.0f || zAxisMove != 0.0f)
             {
                 anim.SetBool("isRunning", true);
-            } else
+            }
+            else
             {
                 anim.SetBool("isRunning", false);
             }
@@ -76,7 +81,7 @@ public class BasePlayerMovement : MonoBehaviour
             LookDirection += LookDelta;
 
             //limit look up and down (use for 3rd person)
-            LookDirection.y = Mathf.Clamp(LookDirection.y, -75.0f, 75.0f);
+            LookDirection.y = Mathf.Clamp(LookDirection.y, -30.0f, 0f);
 
             //use this for top down, 3rd person
             //LookDirection.y = Mathf.Clamp(LookDirection.y, CameraDegree, CameraDegree);
@@ -86,6 +91,19 @@ public class BasePlayerMovement : MonoBehaviour
 
             //rotate player
             this.transform.localRotation = Quaternion.AngleAxis(LookDirection.x, this.transform.up);
+        }
+    }
+
+    private void ControlSpecialMoves()
+    {
+        //jump with space
+        if (Input.GetKey(KeyCode.Space))
+        {
+            anim.SetBool("isJumping", true);
+        }
+        else
+        {
+            anim.SetBool("isJumping", false);
         }
     }
 }
