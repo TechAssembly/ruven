@@ -7,11 +7,11 @@ public class PlayersListLayoutGroup : MonoBehaviour
     public GameObject playerListingPrefab;
     public List<GameLobbyPlayerListing> playerListings;
 
-    public void HandlePlayersList(List<GameLobbyPlayerData> players)
+    public void HandlePlayersList(IList<GameLobbyPlayerData> players)
     {
         var playerIds = players.Select(room => room.Id);
         var playersToDelete = playerListings.Where(room => !playerIds.Contains(room.Id)).ToList();
-        players.ForEach(UpdatePlayer);
+        players.ToList().ForEach(UpdatePlayer);
         playersToDelete.ForEach(DeletePlayer);
     }
 

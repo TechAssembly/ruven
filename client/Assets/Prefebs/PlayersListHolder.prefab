@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00062152586}
+  m_AnchoredPosition: {x: 0, y: 0.000030517578}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &5314354923855195407
@@ -55,10 +55,10 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 1
+  m_ChildAlignment: 7
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 150, y: 65}
+  m_CellSize: {x: 190, y: 65}
   m_Spacing: {x: 10, y: 10}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -88,7 +88,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7d649d8ab62f42cfb692319f016ab07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerListingPrefab: {fileID: 0}
+  playerListingPrefab: {fileID: 3109280940274870315, guid: 1fa4b9b75070e41b5bdaaceadbd4cadb,
+    type: 3}
   playerListings: []
 --- !u!1 &5314354924064205928
 GameObject:

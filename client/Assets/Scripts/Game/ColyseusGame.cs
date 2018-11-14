@@ -64,8 +64,6 @@ public class ColyseusGame : MonoBehaviour
         {
             Debug.Log("Adding player " + playerId);
             GameObject cube = Instantiate(dummyPlayerPrefab);
-            cube.GetComponentInChildren<Camera>().enabled = false;
-            cube.GetComponent<ColyseusLocalPlayer>().enabled = false;
             UpdatePlayer(change, cube);
             players.Add(playerId, cube);
         }

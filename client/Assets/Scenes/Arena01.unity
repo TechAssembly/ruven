@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.49641287, b: 0.5748173, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1636,6 +1636,19 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2147402052}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &147144639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 147144638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad3c3ef0935a4e4ea8031ac86b69e05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  game: {fileID: 282949574}
 --- !u!4 &147144640 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400170, guid: abfe6fc5a9b390a488839c1fc3b58dcd,
@@ -1651,7 +1664,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 147144638}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: e15e66f175258064d944ae13e92576b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -1962,13 +1974,12 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 170076733}
   m_Enabled: 1
-  serializedVersion: 9
+  serializedVersion: 8
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
     m_Type: 2
@@ -3016,11 +3027,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 282949573}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: e27980540f8d94586b89ec6fd68758a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dummyPlayerPrefab: {fileID: 6511677816748885591, guid: 1a825bf74ea14437c86553bc9f2e6b01,
+  dummyPlayerPrefab: {fileID: 7812552267367925331, guid: a8e3e524e9900461f929f9774a62e8a5,
     type: 3}
 --- !u!4 &282949575
 Transform:

@@ -7,11 +7,12 @@ using UnityEngine.SceneManagement;
 
 public class ColyseusGameLobby : MonoBehaviour
 {
-    public PlayersListLayoutGroup playersListLayoutGroup;
+    public GameObject teamListPrefab;
+    public Transform teamListHolder;
 
-    [HideInInspector]
+    BaseTeamLayout teamLayout;
+
     public bool IsOwner { get; private set; }
-    [HideInInspector]
     public bool AllPlayersReady { get; private set; }
     public bool IsReady { get; private set; }
 
@@ -55,6 +56,17 @@ public class ColyseusGameLobby : MonoBehaviour
     void Room_OnJoin(object sender, EventArgs e)
     {
         Debug.Log("Joined room!!!");
+        teamLayout = CreateTeamLayout(ColyseusRoom.Instance.RoomData.Mode);
+        teamLayout.CreateLayout(teamListPrefab);
+    }
+
+    BaseTeamLayout CreateTeamLayout(RoomData.GameMode gameMode)
+    {
+        if (gameMode == RoomData.GameMode.FreeForAll)
+        {
+            return teamListHolder.gameObject.AddComponent<SingleTeamLayout>();
+        }
+        return teamListHolder.gameObject.AddComponent<MultipleTeamsLayout>();
     }
 
     void Room_OnError(object sender, ErrorEventArgs e)
@@ -74,8 +86,7 @@ public class ColyseusGameLobby : MonoBehaviour
         Debug.Log("Is First State = " + e.isFirstState);
         Debug.Log("State = " + e.state);
 
-        var update = GameLobbyUpdatesParser.Parse(e.state);
-        playersListLayoutGroup.HandlePlayersList(update.Players);
+        var update = teamLayout.UpdateTeams(e.state);
         string myId = ColyseusRoom.Instance.Room.sessionId;
         IsOwner = myId == update.OwnerId;
         IsReady = update.Players.FirstOrDefault(p => p.Id == myId)?.Ready ?? false;
@@ -95,6 +106,5 @@ public class ColyseusGameLobby : MonoBehaviour
         Debug.Log("Received START_GAME with ROOM_ID = " + roomId);
         ColyseusRoom.Instance.JoinRoom(roomId);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-
     }
 }
