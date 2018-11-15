@@ -136,7 +136,7 @@
         "Name": "Gallop",
         "Effects": [
           {
-            "Type": "Jump 5 meters every step",
+            "Type": "Jump 5 meters forward",
             "Good": {
               "Type": "Jump 10 meters every step and over walls"
             },
