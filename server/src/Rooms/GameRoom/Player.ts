@@ -1,15 +1,24 @@
-import { Position } from './Position';
+export enum KeyState {
+  Up = 'Up', // Just released
+  Down = 'Down', // Just pressed
+  Pressed = 'Pressed', // Being pressed
+  Released = 'Released', // Not being pressed
+}
+
+export interface PlayerGameState {
+  xPosition: number;
+  yPosition: number;
+  zPosition: number;
+  rotation: number;
+  xInput: number;
+  zInput: number;
+  leftShiftPressed: KeyState;
+}
 
 export class Player {
-  private static playerCounter: number;
-
-  public name: string;
-
   constructor(
-    public position: Position = new Position(),
-    public rotation = 0,
-  ) {
-    this.name = `player${Player.playerCounter}`;
-    Player.playerCounter += 1;
-  }
+    public id: string,
+    public name: string,
+    public playerGameState?: PlayerGameState,
+  ) { }
 }

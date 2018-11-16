@@ -8,11 +8,13 @@ export const MAX_PLAYERS_IN_ROOM = 16;
 export abstract class LobbyRoom<
   S extends LobbyRoomState<P>, P extends LobbyPlayer = LobbyPlayer> extends Room<S> {
 
+  gameRoomName: string = 'game';
   incomingClientOptions: EntityMap<any> = {};
 
   onInit(options: any): void {
     this.setState(this.initialPlayerState());
     this.maxClients = options.maxClients || MAX_PLAYERS_IN_ROOM;
+    this.gameRoomName = options.gameRoomName || this.gameRoomName;
   }
 
   protected abstract initialPlayerState(data?: any): S;
@@ -59,15 +61,25 @@ export abstract class LobbyRoom<
     }
 
     debugLobbies('Lobby %o is ready, starting game', this.roomId);
-    this.emit('start_game', 'game');
+    this.emit('start_game');
+  }
+
+  public createGameRoom(matchMaker: MatchMaker) {
+    const gameRoomId = matchMaker.create(
+      this.gameRoomName, {
+        create: true,
+        maxClients: this.clients,
+        initialPlayerData: this.state,
+      });
+    debugLobbies(
+      'Received start_game for %o, created %o (%o)', this.roomId, this.gameRoomName, gameRoomId);
+    this.broadcast({ action: 'join_game', roomId: gameRoomId });
   }
 }
 
-export const subscribeToGameStart = (room: Room, matchMaker: MatchMaker) => {
-  debugLobbies('Room %o created, registering to start_game', room.roomId);
-  room.once('start_game', (roomName: string) => {
-    const gameRoomId = matchMaker.create(roomName, { create: true, maxClients: room.clients });
-    debugLobbies('Received start_game for %o, created room %o', room.roomId, gameRoomId);
-    room.broadcast({ action: 'join_game', roomId: gameRoomId });
-  });
-};
+export const subscribeToGameStart =
+  <S extends LobbyRoomState<P>, P extends LobbyPlayer = LobbyPlayer>(
+    room: LobbyRoom<S, P>, matchMaker: MatchMaker) => {
+    debugLobbies('Room %o created, registering to start_game', room.roomId);
+    room.once('start_game', () => room.createGameRoom(matchMaker));
+  };

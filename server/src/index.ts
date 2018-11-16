@@ -7,6 +7,7 @@ import { GameRoom } from './Rooms/GameRoom/GameRoom';
 import { FreeForAllLobbyRoom, TeamLobbyRoom } from './Rooms/GameLobbyRoom';
 import { ruvenDebug, debugErrors } from './loggers';
 import { subscribeToGameStart } from './Rooms/GameLobbyRoom/LobbyRoom';
+import { FreeForAllGameRoom } from './Rooms/GameRoom/FreeForAllGameRoom';
 
 const app: express.Application = express();
 const port: number = Number(process.env.PORT) || 3000;
@@ -26,9 +27,16 @@ const handleGameLobbyEvents = (handler: RegisteredHandler) => {
 };
 
 async function main() {
-  await gameServer.register('game', GameRoom);
-  handleGameLobbyEvents(await gameServer.register('free_for_all_lobby', FreeForAllLobbyRoom));
-  handleGameLobbyEvents(await gameServer.register('team_deathmatch_lobby', TeamLobbyRoom));
+  handleGameLobbyEvents(await gameServer.register(
+    'free_for_all_lobby',
+    FreeForAllLobbyRoom,
+    { gameRoomName: 'free_for_all_game' }));
+  handleGameLobbyEvents(await gameServer.register(
+    'team_deathmatch_lobby',
+    TeamLobbyRoom,
+    { gameRoomName: 'team_deathmatch_game' }));
+
+  await gameServer.register('free_for_all_game', FreeForAllGameRoom);
 
   gameServer.matchMaker.create('game', {});
   gameServer.matchMaker.create('free_for_all_lobby', {});

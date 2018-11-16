@@ -1,14 +1,13 @@
-import { Position } from './Position';
+import { PlayerGameState } from './Player';
 
 export interface BaseMessage {
   action: string;
 }
 
-export interface MoveMessage extends BaseMessage {
-  action: 'move';
-  position: Position;
-  rotation: number;
+export interface PlayerGameStateMessage extends BaseMessage {
+  action: 'gameStateChange';
+  playerGameState: PlayerGameState;
 }
 
 export type GameRoomMessage =
-    | MoveMessage;
+    | PlayerGameStateMessage;

@@ -1,21 +1,22 @@
 import { EntityMap, Client } from '@techassembly/colyseus';
-import { MoveMessage } from './Messages';
+import { PlayerGameStateMessage } from './Messages';
 import { Player } from './Player';
 
-export class GameState {
-  players: EntityMap<Player> = {};
+export abstract class GameState<P extends Player = Player>{
+  players: EntityMap<P> = {};
 
-  addPlayer(client: Client) {
-    this.players[client.sessionId] = new Player();
+  abstract createNewPlayer(client: Client, options: object): P;
+
+  addPlayer(client: Client, options: any) {
+    this.players[client.sessionId] = this.createNewPlayer(client, options);
   }
 
   removePlayer(client: Client) {
     delete this.players[client.sessionId];
   }
 
-  movePlayer(client: Client, { position, rotation }: MoveMessage) {
+  changePlayerGameState(client: Client, { playerGameState }: PlayerGameStateMessage) {
     const player = this.players[client.sessionId];
-    player.rotation = rotation;
-    player.position = position;
+    player.playerGameState = playerGameState;
   }
 }

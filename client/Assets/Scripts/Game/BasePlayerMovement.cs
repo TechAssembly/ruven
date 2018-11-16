@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BasePlayerMovement : MonoBehaviour
 {
-
+    const string RunningAnimationName = "JUMP00";
     public float MoveSpeed = 5.0f;
     public Camera childCamera = null;
     public float LookSensitivity = 3.0f; //amount of look per mouse move, higher look faster
@@ -30,19 +30,18 @@ public class BasePlayerMovement : MonoBehaviour
         //if its enabled in the start method we need this line too just for development
         if (Input.GetKeyDown(KeyCode.Escape) == true)
         {
-        	Cursor.lockState = CursorLockMode.None;
+            Cursor.lockState = CursorLockMode.None;
         }
 
         ControlMovement();
         ControlLookAround();
-        ControlSpecialMoves();
 
         void ControlMovement()
         {
             float xAxisMove = Input.GetAxis("Horizontal");
             float zAxisMove = Input.GetAxis("Vertical");
 
-          
+
 
             //press shift and character walks
             if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -58,8 +57,8 @@ public class BasePlayerMovement : MonoBehaviour
             }
 
             this.transform.Translate(xAxisMove * MoveSpeed * Time.deltaTime, 0.0f, zAxisMove * MoveSpeed * Time.deltaTime);
-            
-            if(xAxisMove != 0.0f || zAxisMove != 0.0f)
+
+            if (xAxisMove != 0.0f || zAxisMove != 0.0f)
             {
                 anim.SetBool("isRunning", true);
             }
@@ -94,16 +93,8 @@ public class BasePlayerMovement : MonoBehaviour
         }
     }
 
-    private void ControlSpecialMoves()
+    bool IsAnimationPlaying(string animationName)
     {
-        //jump with space
-        if (Input.GetKey(KeyCode.Space))
-        {
-            anim.SetBool("isJumping", true);
-        }
-        else
-        {
-            anim.SetBool("isJumping", false);
-        }
+        return true;
     }
 }

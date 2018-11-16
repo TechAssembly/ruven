@@ -33,22 +33,17 @@ public class ColyseusGame : MonoBehaviour
         ColyseusRoom.Instance.OnStateChange -= Room_OnStateChange;
     }
 
-    public void OnPlayerMove(Transform player)
+    public void OnPlayerMove(PlayerGameState player)
     {
         ColyseusRoom.Instance?.Room?.Send(CreateMoveAction(player));
     }
 
-    static object CreateMoveAction(Transform player)
+    static object CreateMoveAction(PlayerGameState player)
     {
         return new IndexedDictionary<string, object>
         {
             {"action", "move"},
-            {"position", new IndexedDictionary<string, object> {
-                    {"x", player.position.x},
-                    {"y", player.position.y},
-                    {"z", player.position.z},
-            }},
-            {"rotation", player.rotation.eulerAngles.y},
+            {"playerGameState", player.ToColyseus()},
         };
     }
 
@@ -112,9 +107,9 @@ public class ColyseusGame : MonoBehaviour
 
     static void UpdatePlayer(DataChange change, GameObject cube)
     {
-        PlayerUpdate update = PlayerUpdate.FromColyseus(change.value);
+        PlayerGameState update = PlayerGameState.FromColyseus(change.value);
         var eular = cube.transform.rotation.eulerAngles;
-        eular.y = update.Rotation;
+        eular.y = update.rotation;
         cube.transform.SetPositionAndRotation(update.Position, Quaternion.Euler(eular));
     }
 
