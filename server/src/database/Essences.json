@@ -1,0 +1,13 @@
+{
+  "Essence": {
+    "NEUTRAL": 0,
+    "GOOD": 1,
+    "BENEVOLENT": 2,
+    "RIGHTEOUS": 3,
+    "DIVINE": 4,
+    "EVIL": -1,
+    "MALICIOUS": -2,
+    "NEFARIOUS": -3,
+    "SINISTER": -4
+  }
+}

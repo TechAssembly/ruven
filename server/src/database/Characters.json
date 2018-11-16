@@ -92,7 +92,7 @@
       "Name": "Elwyn's Heart",
       "Description": "You take the unicorn's heart and become a little bit unicorn yourself.",
       "Stats": {
-        "HPR": "2.5",
+        "HRP": "2.5",
         "HP": "50"
       },
       "Active": {
@@ -122,7 +122,7 @@
       "Stats": {
         "AR": "10",
         "MS": "15",
-        "HPR": "2",
+        "HRP": "2",
         "BD": "10"
       }
     },
@@ -168,7 +168,7 @@
         "Evil": {
           "AR": "20 + 0.15 * CK",
           "HP": "35 + 0.15 * CK",
-          "HPR": "1.5"
+          "HRP": "1.5"
         }
       }
     },
@@ -218,7 +218,7 @@
       "Description": "You wear the lions mighty mane as if you were the king of the jungle.",
       "Stats": {
         "HP": "80",
-        "HPR": "2",
+        "HRP": "2",
         "AR": "5",
         "MS": "20",
         "BD": "10"
@@ -251,7 +251,7 @@
       "Stats": {
         "MS": "-30",
         "HP": "20",
-        "HPR": "2"
+        "HRP": "2"
       },
       "Active": {
         "Effects": [
@@ -286,7 +286,7 @@
             "Type": "Change stats",
             "Stats": {
               "MS": "25",
-              "HPR": "5",
+              "HRP": "5",
               "AR": "15"
             },
             "Duration": "5"
@@ -326,5 +326,22 @@
     "Name": "Loxodon",
     "Title": "The elephant. Biggest of them all.",
     "Essence": "Good"
+  },
+  "Hunman": {
+    "Head": {
+      "Name": "Human Eyes",
+      "Description": "Basic human eyes, nothing special with those"
+    },
+    "Torso": {
+      "Name": "Human Torso",
+      "Description": "Basic human torso, nothing special with those"
+    },
+    "Legs": {
+      "Name": "Human Legs",
+      "Description": "Basic human legs, nothing special with those"
+    },
+    "Name": "Human",
+    "Title": "The basic of them all",
+    "Essence": "Neutral"
   }
 }
