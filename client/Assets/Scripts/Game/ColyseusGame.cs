@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Colyseus;
 using GameDevWare.Serialization;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ColyseusGame : MonoBehaviour
 {
@@ -116,6 +117,7 @@ public class ColyseusGame : MonoBehaviour
         var eular = cube.transform.rotation.eulerAngles;
         eular.y = update.Rotation;
         cube.transform.SetPositionAndRotation(update.Position, Quaternion.Euler(eular));
+        cube.transform.Find("PlayerName").transform.GetComponent<PlayerName>().nameLabel.text = update.Name;
     }
 
     void Room_OnLeave(object sender, EventArgs e)
@@ -138,5 +140,6 @@ public class ColyseusGame : MonoBehaviour
 
     void Room_OnJoin(object sender, EventArgs e)
     {
+        Debug.Log("On Join: " + sender);
     }
 }

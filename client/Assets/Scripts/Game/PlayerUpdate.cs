@@ -8,10 +8,12 @@ public class PlayerUpdate
 
     public Vector3 Position { get; private set; }
     public float Rotation { get; private set; }
+    public string Name {get; private set;}
 
     public static PlayerUpdate FromColyseus(object update)
     {
         var updateObj = ReadObject(update);
+        var playerName = updateObj["name"].ToString();
         var positionObj = ReadObject(updateObj["position"]);
         var position = new Vector3(
             Convert.ToSingle(positionObj["x"]),
@@ -23,6 +25,7 @@ public class PlayerUpdate
         {
             Rotation = rotation,
             Position = position,
+            Name = playerName,
         };
     }
 }
