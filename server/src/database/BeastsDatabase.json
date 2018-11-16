@@ -1,0 +1,330 @@
+{
+  "Crab": {
+    "Head": {
+      "Name": "Hermit's Eyes",
+      "Description": "The player uses the crabs eyes as its own. Greatly increases the wearers precision but also makes him look ugly.",
+      "Stats": {
+        "BD": "20"
+      },
+      "Active": {
+        "Name": "Behold",
+        "Effects": [
+          {
+            "Type": "Change stats",
+            "Duration": "7",
+            "Stats": {
+              "CK": "0.5 * CK",
+              "Evil": {
+                "BD": "0.25 * CK"
+              }
+            }
+          }
+        ],
+        "Cooldown": "24"
+      }
+    },
+    "Torso": {
+      "Name": "Hermit's Shell",
+      "Description": "Part of the shell of the giant crab “Hermit”. Used as body armor.",
+      "Stats": {
+        "AR": "35",
+        "HP": "60",
+        "MS": "-35"
+      }
+    },
+    "Legs": {
+      "Name": "Hermit's Legs",
+      "Description": "Hermit’s 8 legs can be used to help carry your burdens.",
+      "Stats": {
+        "MS": "30",
+        "HP": "20",
+        "AR": "5"
+      }
+    },
+    "Joker": {
+      "Name": "Hermit’s Claw",
+      "Description": "Hermit’s big claw. Used to pincer enemies and inflict high melee damage. (It's also quite heavy to hold)",
+      "Stats": {
+        "MS": "-55",
+        "AR": "5",
+        "BD": "25"
+      },
+      "Active": {
+        "Name": "Pincer",
+        "Effects": [
+          {
+            "Type": "AOE Attack",
+            "Range": "range",
+            "Damage": "15 + BD",
+            "Evil": {
+              "Damage": "15 + BD + 0.25 * CK",
+              "Range": "2 * range"
+            }
+          }
+        ],
+        "Cooldown": "35"
+      }
+    },
+    "Name": "Hermit",
+    "Title": "The giant crab of the swamps",
+    "Essence": "Good"
+  },
+  "Unicorn": {
+    "Head": {
+      "Name": "Elwyn's Horn",
+      "Description": "Your forhead is the new base for the majestic unicorn horn.",
+      "Stats": {
+        "HRP": "1"
+      },
+      "Active": {
+        "Name": "Ram",
+        "Effects": [
+          {
+            "Type": "Pipe line attack",
+            "Damage": "0.5 * CK + 60",
+            "SelfDamage": "75 - 0.5 * CK"
+          }
+        ],
+        "Cooldown": "30"
+      }
+    },
+    "Torso": {
+      "Name": "Elwyn's Heart",
+      "Description": "You take the unicorn's heart and become a little bit unicorn yourself.",
+      "Stats": {
+        "HPR": "2.5",
+        "HP": "50"
+      },
+      "Active": {
+        "Name": "Neigh",
+        "Effects": [
+          {
+            "Type": "Shine like a beautiful unicorn"
+          },
+          {
+            "Type": "Heal Self",
+            "Value": "10",
+            "Good": {
+              "Value": "10 + 0.25 * CK"
+            }
+          },
+          {
+            "Type": "Heal Team",
+            "Value": "10"
+          }
+        ],
+        "Cooldown": "20"
+      }
+    },
+    "Legs": {
+      "Name": "Elwyn's Tail",
+      "Description": "Attach the unicorn's tail to your bottom",
+      "Stats": {
+        "AR": "10",
+        "MS": "15",
+        "HPR": "2",
+        "BD": "10"
+      }
+    },
+    "Joker": {
+      "Name": "Hoofs",
+      "Description": "Attach Elwyn's magical hoofs to your feet",
+      "Stats": {
+        "MS": "50"
+      },
+      "Active": {
+        "Name": "Gallop",
+        "Effects": [
+          {
+            "Type": "Jump 5 meters forward",
+            "Good": {
+              "Type": "Jump 10 meters forward or over a wall"
+            },
+            "Evil": {
+              "Type": "Damage when landing",
+              "Stats": {
+                "Damage": "30 + 0.3 * CK"
+              }
+            }
+          }
+        ],
+        "Cooldown": "14"
+      }
+    },
+    "Name": "Elwyn",
+    "Title": "The unicorn of sunshine meadow.",
+    "Essence": "Evil"
+  },
+  "Lion": {
+    "Head": {
+      "Name": "Apollo's Skull",
+      "Description": "You wear Apollo's huge skull on your head making you look like a king",
+      "Stats": {
+        "AR": "20",
+        "HP": "35",
+        "Good": {
+          "BD": "0.25 * CK"
+        },
+        "Evil": {
+          "AR": "20 + 0.15 * CK",
+          "HP": "35 + 0.15 * CK",
+          "HPR": "1.5"
+        }
+      }
+    },
+    "Torso": {
+      "Name": "Apollo's Fang",
+      "Description": "You use one of Apollo's terrifying fangs as a weapon in combat. May make you a bit too confident about yourself",
+      "Stats": {
+        "BD": "45",
+        "HP": "-40",
+        "Good": {
+          "BD": "45 + 0.25 * CK"
+        },
+        "Evil": {
+          "MS": "10 * number of team mates",
+          "BD": "45 + 5 * number of team mates"
+        }
+      }
+    },
+    "Legs": {
+      "Name": "Apollo's Soft Paws",
+      "Description": "You gain the lions agility and flexability.",
+      "Stats": {
+        "MS": "45",
+        "HP": "20",
+        "AR": "5"
+      },
+      "Active": {
+        "Cooldown": "25",
+        "Name": "Stalk",
+        "Effects": [
+          {
+            "Type": "Become invisible",
+            "Duration": "5"
+          },
+          {
+            "Type": "Change stats",
+            "Stats": {
+              "MS": "-0.5 * MS"
+            },
+            "Duration": "5"
+          }
+        ]
+      }
+    },
+    "Joker": {
+      "Name": "Apollo's Mane",
+      "Description": "You wear the lions mighty mane as if you were the king of the jungle.",
+      "Stats": {
+        "HP": "80",
+        "HPR": "2",
+        "AR": "5",
+        "MS": "20",
+        "BD": "10"
+      },
+      "Active": {
+        "Name": "Rawr",
+        "Effects": [
+          {
+            "Type": "Change stats",
+            "Duration": "7",
+            "Good": {
+              "CK": "CK"
+            },
+            "Evil": {
+              "CK": "0.5 * CK"
+            }
+          }
+        ],
+        "Cooldown": "40"
+      }
+    },
+    "Name": "Apollo",
+    "Title": "The Lion. King of the jungle.",
+    "Essence": "Evil"
+  },
+  "Elephant": {
+    "Head": {
+      "Name": "Loxodon’s Snout",
+      "Description": "You carry Loxodon's 'trunk' and use it as a hose spraying 'water' all over.",
+      "Stats": {
+        "MS": "-30",
+        "HP": "20",
+        "HPR": "2"
+      },
+      "Active": {
+        "Effects": [
+          {
+            "Type": "AOE Attack",
+            "Evil": {
+              "MS": "-50",
+              "Duration": "2.5"
+            },
+            "Good": {
+              "HP": "30"
+            },
+            "Damage": "30"
+          }
+        ],
+        "Cooldown": "15"
+      }
+    },
+    "Torso": {
+      "Name": "Loxodon's Ears",
+      "Description": "Loxodon's big elephant ears help you defend yourself and help stay sharp in battle.",
+      "Stats": {
+        "HP": "40",
+        "AR": "10",
+        "BD": "15",
+        "MS": "20"
+      },
+      "Active": {
+        "Name": "Perceive",
+        "Effects": [
+          {
+            "Type": "Change stats",
+            "Stats": {
+              "MS": "25",
+              "HPR": "5",
+              "AR": "15"
+            },
+            "Duration": "5"
+          },
+          {
+            "Type": "Enhancing all your senses",
+            "Duration": "5"
+          }
+        ],
+        "Cooldown": "20"
+      }
+    },
+    "Legs": {
+      "Name": "Loxodon's Big Bones",
+      "Description": "You attach some of Loxodon's large leg bones to your own legs. Making your kicks far more deadly but they slow you down slightly",
+      "Stats": {
+        "MS": "-30",
+        "BD": "25",
+        "AR": "15"
+      }
+    },
+    "Joker": {
+      "Name": "Loxodon's Tough Skin",
+      "Stats": {
+        "HP": "100",
+        "AR": "35",
+        "MS": "-25",
+        "Good": {
+          "BD": "20"
+        },
+        "Evil": {
+          "HP": "30",
+          "AR": "10"
+        }
+      }
+    },
+    "Name": "Loxodon",
+    "Title": "The elephant. Biggest of them all.",
+    "Essence": "Good"
+  }
+}
