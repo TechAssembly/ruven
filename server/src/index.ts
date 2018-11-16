@@ -7,6 +7,7 @@ import { GameRoom } from './Rooms/GameRoom/GameRoom';
 import { FreeForAllLobbyRoom, TeamLobbyRoom } from './Rooms/GameLobbyRoom';
 import { ruvenDebug, debugErrors } from './loggers';
 import { subscribeToGameStart } from './Rooms/GameLobbyRoom/LobbyRoom';
+import { Player } from './Rooms/GameRoom/Player';
 
 const app: express.Application = express();
 const port: number = Number(process.env.PORT) || 3000;
@@ -39,6 +40,9 @@ async function main() {
   gameServer.listen(port, undefined, undefined, () => {
     ruvenDebug('Server is listening on port %d', port);
   });
+
+  const p = new Player();
+  debugErrors('%O', p);
 }
 
 main().catch(e => debugErrors('Something went wrong: %O', e));

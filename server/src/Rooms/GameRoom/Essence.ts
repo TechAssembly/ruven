@@ -1,7 +1,7 @@
-import * as data from '../../database/Essences.json';
+import * as jsonData from '../../database/Essences.json';
 
 export class Essence {
-  public static getEssence(key : string) : number {
-    return data.Essence[key];
+  public static getEssence(key: string): number {
+    return (<any>jsonData).Essence[key];
   }
 }
