@@ -141,7 +141,7 @@ namespace Colyseus
 		/// <param name="data">Data to be sent</param>
 		public void Send (object data)
 		{
-			this.connection.Send(new object[]{Protocol.ROOM_DATA, this.id, data});
+			this.connection?.Send(new object[]{Protocol.ROOM_DATA, this.id, data});
 		}
 
 		protected void ParseMessage (byte[] recv)
