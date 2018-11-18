@@ -3,7 +3,7 @@ import { StatsAdditions } from './StatsAdditions';
 
 export class StatsConverter {
   public static getStats (name : string = 'Human', part : string) : StatsAdditions {
-    const databasePart = data[name][part];
+    const databasePart = data[name][part]['Stats'];
     const health = StatsConverter.filterState(databasePart['HP']);
     const healthRegeneration = StatsConverter.filterState(databasePart['HRP']);
     const armor = StatsConverter.filterState(databasePart['AR']);
