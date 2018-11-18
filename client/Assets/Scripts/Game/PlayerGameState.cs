@@ -10,22 +10,22 @@ public class PlayerGameState
 
 #pragma warning disable IDE1006 // Naming Styles
     [DataMember]
-    public float xPosition { get; set; }
+    public double xPosition { get; set; }
     [DataMember]
-    public float yPosition { get; set; }
+    public double yPosition { get; set; }
     [DataMember]
-    public float zPosition { get; set; }
+    public double zPosition { get; set; }
     [DataMember]
-    public float rotation { get; set; }
+    public double rotation { get; set; }
     [DataMember]
-    public float xInput { get; set; }
+    public double xInput { get; set; }
     [DataMember]
-    public float zInput { get; set; }
+    public double zInput { get; set; }
     [DataMember]
     public KeyState leftShiftPressed { get; set; }
 #pragma warning restore IDE1006 // Naming Styles
-
-    public Vector3 Position => new Vector3(xPosition, yPosition, zPosition);
+    
+    public Vector3 Position => new Vector3((float)xPosition, (float)yPosition, (float)zPosition);
 
     public static PlayerGameState FromColyseus(object update) => ObjectExtensions.ToObject<PlayerGameState>(update);
 

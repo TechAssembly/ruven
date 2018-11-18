@@ -26,7 +26,7 @@ export class FreeForAllLobbyRoom extends LobbyRoom<FreeForAllRoomState> {
       default:
         debugErrors(
           'Client %o sent invalid %o action on FFA lobby %o',
-          client.sessionId, (<any>data).action, this.roomId);
+          client.id, (<any>data).action, this.roomId);
         break;
     }
   }

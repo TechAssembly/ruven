@@ -19,7 +19,7 @@ export class LobbyPlayer {
     public ready = false,
   ) {
     debugLobbies('Player recieved, options: %O', client.options);
-    this.id = client.sessionId;
+    this.id = client.id;
     this.name = client.options && client.options.name || DEBUG_generatePlayerId();
   }
 }
@@ -32,26 +32,29 @@ export abstract class LobbyRoomState<P extends LobbyPlayer = LobbyPlayer> {
 
   addPlayer(client: Client): P {
     if (this.roomOwner === null) {
-      this.roomOwner = client.sessionId;
+      this.roomOwner = client.id;
+      debugLobbies('Room has no owner, setting %o as owner', this.roomOwner);
     }
+
     const player = this.createNewPlayer(client);
-    this.players[client.sessionId] = player;
+    this.players[client.id] = player;
     return player;
   }
 
   protected playerByClient(client: Client): P {
-    return this.players[client.sessionId];
+    return this.players[client.id];
   }
 
   removePlayer(client: Client): void {
-    delete this.players[client.sessionId];
+    delete this.players[client.id];
     const playerIds = Object.keys(this.players);
-    if (client.sessionId === this.roomOwner && playerIds.length > 0) {
+    if (client.id === this.roomOwner && playerIds.length > 0) {
       this.roomOwner = randomElement(playerIds);
+      debugLobbies('Owner %o left the room, setting %o as owner', client.id, this.roomOwner);
     }
   }
 
   readyPlayer(client: Client): void {
-    this.players[client.sessionId].ready = true;
+    this.players[client.id].ready = true;
   }
 }

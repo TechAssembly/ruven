@@ -14,7 +14,7 @@ public class ColyseusRoom : MonoBehaviour
     public event EventHandler<MessageEventArgs> OnMessage;
     public event EventHandler<RoomUpdateEventArgs> OnStateChange;
 
-    public string PlayerId => Room?.sessionId;
+    public string PlayerId => ColyseusConnector.Instance.Client.id;
 
     string PlayerName => PlayerPrefs.GetString("ColyseusPlayerName", PlayerId ?? "Unnamed");
 

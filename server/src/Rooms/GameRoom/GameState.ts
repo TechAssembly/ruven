@@ -8,15 +8,15 @@ export abstract class GameState<P extends Player = Player>{
   abstract createNewPlayer(client: Client, options: object): P;
 
   addPlayer(client: Client, options: any) {
-    this.players[client.sessionId] = this.createNewPlayer(client, options);
+    this.players[client.id] = this.createNewPlayer(client, options);
   }
 
   removePlayer(client: Client) {
-    delete this.players[client.sessionId];
+    delete this.players[client.id];
   }
 
-  changePlayerGameState(client: Client, { playerGameState }: PlayerGameStateMessage) {
-    const player = this.players[client.sessionId];
-    player.playerGameState = playerGameState;
+  changePlayerGameState(client: Client, { data }: PlayerGameStateMessage) {
+    const player = this.players[client.id];
+    player.playerGameState = data;
   }
 }

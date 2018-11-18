@@ -13,9 +13,11 @@ public partial class ColyseusLocalPlayer : MonoBehaviour
             xPosition = transform.position.x,
             yPosition = transform.position.y,
             zPosition = transform.position.z,
+            xInput = Input.GetAxis("Horizontal"),
+            zInput = Input.GetAxis("Vertical"),
             rotation = transform.rotation.eulerAngles.y,
             leftShiftPressed = KeyCode.LeftShift.GetStateOfKey(),
         };
-        game.OnPlayerMove(PlayerState);
+        game.OnPlayerStateChange(PlayerState);
     }
 }

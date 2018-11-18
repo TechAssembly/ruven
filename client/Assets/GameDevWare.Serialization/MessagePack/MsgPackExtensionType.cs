@@ -15,6 +15,7 @@
 */
 using System;
 using GameDevWare.Serialization.Serializers;
+using UnityEngine;
 
 // ReSharper disable once CheckNamespace
 namespace GameDevWare.Serialization.MessagePack
@@ -109,11 +110,14 @@ namespace GameDevWare.Serialization.MessagePack
 		}
 
 		public bool Equals(MessagePackExtensionType other)
-		{
+        {
 			if (other == null) return false;
 			if (ReferenceEquals(this, other)) return true;
-
-			if (this.Length != other.Length) return false;
+            try {
+                if (this.Length != other.Length) return false;
+            } catch(NullReferenceException) {
+                return false;
+            }
 			if (this.GetHashCode() != other.GetHashCode()) return false;
 
 			for (var i = 0; i < this.Length; i++)

@@ -70,7 +70,7 @@ public class ColyseusConnector : MonoBehaviour
     {
         ClientOpen = false;
         Debug.LogError("CONNECTION ERROR");
-        Debug.LogError(e);
+        Debug.LogError(e.message);
         OnError?.Invoke(this, e);
     }
 

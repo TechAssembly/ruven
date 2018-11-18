@@ -87,7 +87,7 @@ public class ColyseusGameLobby : MonoBehaviour
         Debug.Log("State = " + e.state);
 
         var update = teamLayout.UpdateTeams(e.state);
-        string myId = ColyseusRoom.Instance.Room.sessionId;
+        string myId = ColyseusConnector.Instance.Client.id;
         IsOwner = myId == update.OwnerId;
         IsReady = update.Players.FirstOrDefault(p => p.Id == myId)?.Ready ?? false;
         AllPlayersReady = update.Players.All(p => p.Ready);

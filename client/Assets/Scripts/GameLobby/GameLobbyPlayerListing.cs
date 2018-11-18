@@ -21,7 +21,7 @@ public class GameLobbyPlayerListing : MonoBehaviour
         playerData = player;
         playerNameText.text = playerData.Name;
         playerReadyToggle.isOn = playerData.Ready;
-        backgroundImage.color = Id == ColyseusRoom.Instance.PlayerId ? OwnClientColor : NormalColor;
+        backgroundImage.color = Id == ColyseusConnector.Instance.Client.id ? OwnClientColor : NormalColor;
         ownerImage.enabled = player.Owner;
     }
 }

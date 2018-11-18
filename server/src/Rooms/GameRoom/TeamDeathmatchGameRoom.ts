@@ -18,7 +18,7 @@ export class TeamDeathmatchGameState extends GameState<TeamDeathmatchPlayer> {
   teams: EntityMap<Team> = {};
 
   createNewPlayer(client: Client, options: any): TeamDeathmatchPlayer {
-    return new TeamDeathmatchPlayer(options.team, client.sessionId, options.name);
+    return new TeamDeathmatchPlayer(options.team, client.id, options.name);
   }
 }
 

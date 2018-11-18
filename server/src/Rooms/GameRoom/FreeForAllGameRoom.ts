@@ -5,7 +5,7 @@ import { Client } from '@techassembly/colyseus';
 
 export class FreeForAllGameState extends GameState {
   createNewPlayer(client: Client, options: any): Player {
-    return new Player(client.sessionId, options.name);
+    return new Player(client.id, options.name);
   }
 }
 

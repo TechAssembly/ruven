@@ -28,7 +28,7 @@ export class TeamLobbyRoom extends LobbyRoom<TeamLobbyRoomState> {
       default:
         debugErrors(
           'Client %o sent invalid %o action on TDM lobby %o',
-          client.sessionId, (<any>data).action, this.roomId);
+          client.id, (<any>data).action, this.roomId);
         break;
     }
   }

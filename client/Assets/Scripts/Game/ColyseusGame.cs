@@ -12,44 +12,25 @@ public class ColyseusGame : MonoBehaviour
     IEnumerator Start()
     {
         yield return StartCoroutine(ColyseusConnector.Instance.EnsureClientOpen());
-        ColyseusRoom.Instance.JoinRoom("game");
-        ColyseusRoom.Instance.OnJoin += Room_OnJoin;
-        ColyseusRoom.Instance.OnError += Room_OnError;
-        ColyseusRoom.Instance.OnLeave += Room_OnLeave;
-        ColyseusRoom.Instance.OnMessage += Room_OnMessage;
-        ColyseusRoom.Instance.OnStateChange += Room_OnStateChange;
-        ColyseusRoom.Instance.Room.Listen("players/:id", Room_OnPlayerChange);
-        ColyseusRoom.Instance.Room.Listen("players/:id/:axis", Room_OnPlayerChange);
-        ColyseusRoom.Instance.Room.Listen("players/:id/position/:axis", Room_OnPlayerMove);
-        ColyseusRoom.Instance.Room.Listen("players/:id/rotation", Room_OnPlayerMove);
+        ColyseusRoom.Instance.Room.Listen("players/:id", Room_OnPlayerLeave);
+        ColyseusRoom.Instance.Room.Listen("players/:id/playerGameState", Room_OnPlayerGameState);
+        ColyseusRoom.Instance.Room.Listen("players/:id/playerGameState/:stat", Room_OnPlayerGameStateStat);
     }
 
-    void Unsubscribe()
+    public void OnPlayerStateChange(PlayerGameState player)
     {
-        ColyseusRoom.Instance.OnJoin -= Room_OnJoin;
-        ColyseusRoom.Instance.OnError -= Room_OnError;
-        ColyseusRoom.Instance.OnLeave -= Room_OnLeave;
-        ColyseusRoom.Instance.OnMessage -= Room_OnMessage;
-        ColyseusRoom.Instance.OnStateChange -= Room_OnStateChange;
-    }
-
-    public void OnPlayerMove(PlayerGameState player)
-    {
-        ColyseusRoom.Instance?.Room?.Send(CreateMoveAction(player));
-    }
-
-    static object CreateMoveAction(PlayerGameState player)
-    {
-        return new IndexedDictionary<string, object>
+        ColyseusRoom.Instance?.Room?.Send(new IndexedDictionary<string, object>
         {
-            {"action", "move"},
-            {"playerGameState", player.ToColyseus()},
-        };
+            {"action", "gameStateChange"},
+            {"data", player.ToColyseus()},
+        });
     }
 
     readonly Dictionary<string, GameObject> players = new Dictionary<string, GameObject>();
+    readonly Dictionary<string, IDictionary<string, object>> playerData =
+        new Dictionary<string, IDictionary<string, object>>();
 
-    void Room_OnPlayerChange(DataChange change)
+    void Room_OnPlayerGameState(DataChange change)
     {
         var playerId = change.path["id"];
         if (playerId == ColyseusRoom.Instance.PlayerId)
@@ -59,16 +40,33 @@ public class ColyseusGame : MonoBehaviour
         {
             Debug.Log("Adding player " + playerId);
             GameObject cube = Instantiate(dummyPlayerPrefab);
-            UpdatePlayer(change, cube);
-            players.Add(playerId, cube);
+            players[playerId] = cube;
+            AddPlayer(playerId, change, cube);
         }
-        else if (change.operation == "replace")
+
+        if (change.operation == "replace")
         {
             Debug.Log("Updating player " + playerId);
-            players.TryGetValue(playerId, out GameObject cube);
-            UpdatePlayer(change, cube);
+            if (players.TryGetValue(playerId, out GameObject cube))
+            {
+                UpdatePlayerStat(change, cube);
+            }
+            else
+            {
+                GameObject anotherCube = Instantiate(dummyPlayerPrefab);
+                players[playerId] = anotherCube;
+                AddPlayer(playerId, change, anotherCube);
+            }
         }
-        else if (change.operation == "remove")
+    }
+
+    void Room_OnPlayerLeave(DataChange change)
+    {
+        var playerId = change.path["id"];
+        if (playerId == ColyseusRoom.Instance.PlayerId)
+            return;
+
+        if (change.operation == "remove")
         {
             Debug.Log("Removing player " + playerId);
             players.TryGetValue(playerId, out GameObject cube);
@@ -77,61 +75,35 @@ public class ColyseusGame : MonoBehaviour
         }
     }
 
-    void Room_OnPlayerMove(DataChange change)
+    void AddPlayer(string playerId, DataChange change, GameObject cube)
     {
-        var playerId = change.path["id"];
+        var playerGameState = (IDictionary<string, object>)change.value;
+        playerData[playerId] = playerGameState;
+        UpdatePlayer(cube, playerGameState);
+    }
+
+    void UpdatePlayerStat(DataChange change, GameObject cube)
+    {
+        var player = playerData[change.path["id"]];
+        player[change.path["stat"]] = change.value;
+        UpdatePlayer(cube, player);
+    }
+
+    static void UpdatePlayer(GameObject cube, IDictionary<string, object> player)
+    {
+        PlayerGameState update = PlayerGameState.FromColyseus(player);
+        var eular = cube.transform.rotation.eulerAngles;
+        eular.y = (float)update.rotation;
+        cube.transform.SetPositionAndRotation(update.Position, Quaternion.Euler(eular));
+    }
+
+    void Room_OnPlayerGameStateStat(DataChange obj)
+    {
+        var playerId = obj.path["id"];
         if (playerId == ColyseusRoom.Instance.PlayerId)
             return;
 
         players.TryGetValue(playerId, out GameObject cube);
-        var positionChanged = change.path.ContainsKey("axis");
-        if (change.path.TryGetValue("axis", out string axis))
-        {
-            var value = Convert.ToSingle(change.value);
-            var currentPosition = cube.transform.position;
-            if (axis == "x")
-                currentPosition.x = value;
-            else if (axis == "y")
-                currentPosition.y = value;
-            else if (axis == "z")
-                currentPosition.z = value;
-            cube.transform.position = currentPosition;
-        }
-        else
-        {
-            var eular = cube.transform.rotation.eulerAngles;
-            eular.y = Convert.ToSingle(change.value);
-            cube.transform.rotation = Quaternion.Euler(eular);
-        }
-    }
-
-    static void UpdatePlayer(DataChange change, GameObject cube)
-    {
-        PlayerGameState update = PlayerGameState.FromColyseus(change.value);
-        var eular = cube.transform.rotation.eulerAngles;
-        eular.y = update.rotation;
-        cube.transform.SetPositionAndRotation(update.Position, Quaternion.Euler(eular));
-    }
-
-    void Room_OnLeave(object sender, EventArgs e)
-    {
-        Unsubscribe();
-    }
-
-    void Room_OnError(object sender, ErrorEventArgs e)
-    {
-        Unsubscribe();
-    }
-
-    void Room_OnStateChange(object sender, RoomUpdateEventArgs e)
-    {
-    }
-
-    void Room_OnMessage(object sender, MessageEventArgs e)
-    {
-    }
-
-    void Room_OnJoin(object sender, EventArgs e)
-    {
+        UpdatePlayerStat(obj, cube);
     }
 }

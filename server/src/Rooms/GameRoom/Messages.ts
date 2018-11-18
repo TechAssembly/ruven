@@ -6,7 +6,7 @@ export interface BaseMessage {
 
 export interface PlayerGameStateMessage extends BaseMessage {
   action: 'gameStateChange';
-  playerGameState: PlayerGameState;
+  data: PlayerGameState;
 }
 
 export type GameRoomMessage =
