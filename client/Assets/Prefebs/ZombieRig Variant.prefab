@@ -155,7 +155,7 @@ MonoBehaviour:
   childCamera: {fileID: 534669904}
   LookSensitivity: 3
   LookSmooth: 2
---- !u!1001 &4389830506682884337
+--- !u!1001 &3197307871112342975
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -170,7 +170,7 @@ PrefabInstance:
     - target: {fileID: 821436885121556862, guid: 96469d0340f384a5dbb868d923a310cb,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.65
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 821436885121556862, guid: 96469d0340f384a5dbb868d923a310cb,
         type: 3}
@@ -220,11 +220,21 @@ PrefabInstance:
     - target: {fileID: 2891580957106614680, guid: 96469d0340f384a5dbb868d923a310cb,
         type: 3}
       propertyPath: m_Name
-      value: PlayerName
+      value: PlayerDetails
       objectReference: {fileID: 0}
     - target: {fileID: 6346169891839382890, guid: 96469d0340f384a5dbb868d923a310cb,
         type: 3}
       propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4609384591168037481, guid: 96469d0340f384a5dbb868d923a310cb,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 3100639542614509342, guid: 96469d0340f384a5dbb868d923a310cb,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

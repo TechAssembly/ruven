@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerName : MonoBehaviour
+public class PlayerDetails : MonoBehaviour
 {
     public Text nameLabel;
     public GameObject placeholder;
@@ -13,4 +13,10 @@ public class PlayerName : MonoBehaviour
         Vector3 namePos = Camera.main.WorldToScreenPoint(placeholder.transform.position);
         nameLabel.transform.position = namePos;
     }
+
+    public void UpdatePlayer(PlayerUpdate player)
+    {
+        nameLabel.text = player.Name;
+    }
+    
 }
