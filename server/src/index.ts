@@ -3,11 +3,12 @@ import { createServer } from 'http';
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 
-import { GameRoom } from './Rooms/GameRoom/GameRoom';
 import { FreeForAllLobbyRoom, TeamLobbyRoom } from './Rooms/GameLobbyRoom';
 import { ruvenDebug, debugErrors } from './loggers';
 import { subscribeToGameStart } from './Rooms/GameLobbyRoom/LobbyRoom';
 import { FreeForAllGameRoom } from './Rooms/GameRoom/FreeForAllGameRoom';
+import { TeamDeathmatchGameRoom } from './Rooms/GameRoom/TeamDeathmatchGameRoom';
+import { RoomConstructor } from '@techassembly/colyseus/lib/Room';
 
 const app: express.Application = express();
 const port: number = Number(process.env.PORT) || 3000;
@@ -22,25 +23,41 @@ const gameServer = new Server({
   server: createServer(app),
 });
 
-const handleGameLobbyEvents = (handler: RegisteredHandler) => {
-  handler.on('create', room => subscribeToGameStart(room, gameServer.matchMaker));
+const handleGameLobbyEvents = ({ lobby }: { lobby: RegisteredHandler }) => {
+  lobby.on('create', room => subscribeToGameStart(room, gameServer.matchMaker));
+};
+
+interface GameModeRoomNames {
+  lobbyName: string;
+  gameRoomName: string;
+}
+
+const registerRoom = async (
+  { lobbyName, gameRoomName }: GameModeRoomNames,
+  lobbyKlass: RoomConstructor,
+  gameKlass: RoomConstructor,
+): Promise<{ lobby: RegisteredHandler, game: RegisteredHandler }> => {
+  const lobby = await gameServer.register(lobbyName, lobbyKlass, { gameRoomName });
+  const game = await gameServer.register(gameRoomName, gameKlass);
+  return { lobby, game };
 };
 
 async function main() {
-  handleGameLobbyEvents(await gameServer.register(
-    'free_for_all_lobby',
-    FreeForAllLobbyRoom,
-    { gameRoomName: 'free_for_all_game' }));
-  handleGameLobbyEvents(await gameServer.register(
-    'team_deathmatch_lobby',
-    TeamLobbyRoom,
-    { gameRoomName: 'team_deathmatch_game' }));
+  const FREE_FOR_ALL: GameModeRoomNames = {
+    lobbyName: 'free_for_all_lobby',
+    gameRoomName: 'free_for_all_game',
+  };
 
-  await gameServer.register('free_for_all_game', FreeForAllGameRoom);
+  const TEAM_DEATHMATCH: GameModeRoomNames = {
+    lobbyName: 'team_deathmatch_lobby',
+    gameRoomName: 'team_deathmatch_game',
+  };
 
-  gameServer.matchMaker.create('game', {});
-  gameServer.matchMaker.create('free_for_all_lobby', {});
-  gameServer.matchMaker.create('team_deathmatch_lobby', {});
+  handleGameLobbyEvents(await registerRoom(FREE_FOR_ALL, FreeForAllLobbyRoom, FreeForAllGameRoom));
+  handleGameLobbyEvents(await registerRoom(TEAM_DEATHMATCH, TeamLobbyRoom, TeamDeathmatchGameRoom));
+
+  gameServer.matchMaker.create(FREE_FOR_ALL.lobbyName, {});
+  gameServer.matchMaker.create(TEAM_DEATHMATCH.lobbyName, {});
 
   // app.use('/colyseus', monitor(gameServer));
 
